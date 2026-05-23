@@ -9,6 +9,10 @@ import { navigate } from '../lib/router.js'
 
 const EMAIL = 'yahayabinmuhammad@gmail.com'
 
+function NavIcon({ src }) {
+  return <img src={src} alt="" className="pgp__voxel" />
+}
+
 function SunIcon() {
   return (
     <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
@@ -48,10 +52,10 @@ export default function PlaygroundPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  const goHome = (e) => {
-    e?.preventDefault?.()
+  const linkTo = (to) => (e) => {
+    e.preventDefault()
     play(SOUNDS.BUTTON)
-    navigate('/')
+    navigate(to)
   }
 
   const copyEmail = async () => {
@@ -77,11 +81,38 @@ export default function PlaygroundPage() {
           <a
             href="/"
             className="pgp__wordmark"
-            onClick={goHome}
+            onClick={linkTo('/')}
             aria-label="Back to home"
           >
-            ← Yahaya Muhammad
+            Yahaya Muhammad
           </a>
+
+          <nav className="pgp__nav" aria-label="primary">
+            <a
+              href="/#work"
+              className="pgp__nav-group"
+              onClick={linkTo('/#work')}
+            >
+              <NavIcon src="/Work%201.png" />
+              <span className="pgp__pill">Work</span>
+            </a>
+            <a
+              href="/#note"
+              className="pgp__nav-group"
+              onClick={linkTo('/#note')}
+            >
+              <NavIcon src="/Note%201.png" />
+              <span className="pgp__pill">Note</span>
+            </a>
+            <a
+              href="/playground"
+              className="pgp__nav-group"
+              onClick={linkTo('/playground')}
+            >
+              <NavIcon src="/Playground%201.png" />
+              <span className="pgp__pill">Playground</span>
+            </a>
+          </nav>
 
           <div className="pgp__right">
             <button
@@ -93,11 +124,7 @@ export default function PlaygroundPage() {
             >
               {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
-            <button
-              type="button"
-              className="pgp__pill"
-              onClick={copyEmail}
-            >
+            <button type="button" className="pgp__pill" onClick={copyEmail}>
               {copied ? 'Copied' : 'Mail'}
             </button>
           </div>
@@ -129,13 +156,8 @@ export default function PlaygroundPage() {
 
       <main className="pgp">
         <header className="pgp__head">
-          <span className="pgp__eyebrow">Playground</span>
-          <h1 className="pgp__title">Bits I make between projects</h1>
-          <p className="pgp__lede">
-            A loose, ongoing archive of small things. Type tests, colour
-            experiments, posters, screens that never shipped. Updated when
-            something is worth keeping.
-          </p>
+          <h1 className="pgp__title">Playground</h1>
+          <p className="pgp__sub">Bits I make between projects.</p>
         </header>
 
         <Playground />
