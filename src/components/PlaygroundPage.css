@@ -31,6 +31,12 @@
   font-weight: 400;
 }
 
+@media (max-width: 900px) {
+  .pgp__title {
+    font-size: clamp(28px, 9vw, 72px);
+  }
+}
+
 @media (max-width: 760px) {
   .pgp {
     padding-top: 96px;

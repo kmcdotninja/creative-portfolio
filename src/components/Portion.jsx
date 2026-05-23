@@ -12,6 +12,7 @@ export default function Portion() {
   const containerRef = useRef(null)
   const cursorRef = useRef(null)
   const [hovering, setHovering] = useState(false)
+  const [ready, setReady] = useState(false)
 
   const onPointerMove = (e) => {
     const container = containerRef.current
@@ -105,10 +106,19 @@ export default function Portion() {
         mesh = new THREE.Mesh(merged, material)
         mesh.scale.setScalar(s)
         scene.add(mesh)
+
+        // Render one frame synchronously so the canvas has content before
+        // we fade it in — prevents a brief white flash from the empty GL buffer.
+        renderer.render(scene, camera)
+        requestAnimationFrame(() => {
+          setReady(true)
+          window.dispatchEvent(new Event('app:portion-ready'))
+        })
       },
       undefined,
       (err) => {
         console.error('STL load failed', err)
+        window.dispatchEvent(new Event('app:portion-ready'))
       },
     )
 
@@ -157,7 +167,7 @@ export default function Portion() {
   return (
     <div
       ref={containerRef}
-      className={`portion ${hovering ? 'portion--hovering' : ''}`}
+      className={`portion${hovering ? ' portion--hovering' : ''}${ready ? ' portion--ready' : ''}`}
       aria-label="3D model — drag to rotate"
       onPointerEnter={(e) => {
         if (e.pointerType !== 'mouse') return

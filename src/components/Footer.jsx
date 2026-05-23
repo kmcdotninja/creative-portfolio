@@ -69,10 +69,15 @@ export default function Footer() {
       >
         <div className="footer-art__cta">
           <p className="footer-art__bio">
-            I&rsquo;m always excited to explore new collaborations and
-            opportunities. Whether you&rsquo;re looking to create something
-            innovative or just want to chat about design, feel free to reach
-            out.
+            {'Always up for new '}
+            <br />
+            {"collaborations. Let’s "}
+            <br className="footer-art__br--mobile" />
+            {'create '}
+            <br className="footer-art__br--desktop" />
+            {'something or '}
+            <br className="footer-art__br--mobile" />
+            {'chat about design.'}
           </p>
           <div className="footer-art__contact">
             <a

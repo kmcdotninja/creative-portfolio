@@ -36,6 +36,13 @@ body {
   overflow-x: hidden;
 }
 
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+}
+
 #root {
   min-height: 100svh;
 }

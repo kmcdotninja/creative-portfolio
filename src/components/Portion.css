@@ -19,6 +19,12 @@
   background: transparent !important;
   outline: none;
   border: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.portion--ready canvas {
+  opacity: 1;
 }
 
 .portion--hovering {

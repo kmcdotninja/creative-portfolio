@@ -45,13 +45,13 @@ export default function HeroCentered() {
               <NavIcon src="/Work%201.png" alt="" />
               <span className="introC__pill">Work</span>
             </a>
-            <a href="#note" className="introC__nav-group">
-              <NavIcon src="/Note%201.png" alt="" />
-              <span className="introC__pill">Note</span>
-            </a>
             <a href="#playground" className="introC__nav-group">
               <NavIcon src="/Playground%201.png" alt="" />
               <span className="introC__pill">Playground</span>
+            </a>
+            <a href="#note" className="introC__nav-group">
+              <NavIcon src="/Note%201.png" alt="" />
+              <span className="introC__pill">Note</span>
             </a>
           </nav>
 

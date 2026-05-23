@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 480px;
+  max-width: 760px;
   margin-bottom: 56px;
   position: relative;
   z-index: 4;
@@ -30,11 +30,33 @@
 }
 
 .footer-art__bio {
-  font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.55;
+  font-family: var(--display);
+  font-size: 56px;
+  line-height: 1.02;
   color: var(--text);
+  text-transform: uppercase;
   margin: 0;
+}
+
+/* Two sets of forced line breaks: one set fires on desktop, the other on
+   mobile, so the bio wraps at the points shown in design either way. */
+.footer-art__br--mobile {
+  display: none;
+}
+.footer-art__br--desktop {
+  display: inline;
+}
+
+@media (max-width: 760px) {
+  .footer-art__bio {
+    font-size: 34px;
+  }
+  .footer-art__br--desktop {
+    display: none;
+  }
+  .footer-art__br--mobile {
+    display: inline;
+  }
 }
 
 .footer-art__contact {
@@ -55,7 +77,7 @@
   padding: 9px 18px;
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
@@ -91,12 +113,17 @@
 .footer-art__text {
   font-family: var(--display);
   font-weight: 400;
-  font-size: calc((min(100vw, 1512px) - var(--pad) * 2 - var(--rail) * 2) / 1.8);
+  /* Sized so "YMD" (Jaro) spans flush from the left rail to the right rail. */
+  font-size: calc((min(100vw, 1512px) - var(--rail) * 2) / 1.78);
   letter-spacing: 0;
   color: var(--text);
   display: block;
   line-height: 1;
   text-align: center;
+  /* Pull the YMD type past the footer's var(--pad) padding so it lines up
+     with the page rails on both sides — without disturbing the bio/CTA. */
+  margin-left: calc(var(--rail) - var(--pad));
+  margin-right: calc(var(--rail) - var(--pad));
   margin-bottom: -0.22em;
   cursor: none;
 }

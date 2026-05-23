@@ -103,20 +103,12 @@ export default function TopNav() {
 
           <nav className="intro__nav" aria-label="primary">
             <a
-              href="/#work"
+              href={pathname === '/' ? '/#work' : '/'}
               className="intro__nav-group"
-              onClick={linkTo('/#work')}
+              onClick={linkTo(pathname === '/' ? '/#work' : '/')}
             >
               <NavIcon src="/Work%201.png" />
               <span className="intro__pill">Work</span>
-            </a>
-            <a
-              href="/note"
-              className="intro__nav-group"
-              onClick={linkTo('/note')}
-            >
-              <NavIcon src="/Note%201.png" />
-              <span className="intro__pill">Note</span>
             </a>
             <a
               href="/playground"
@@ -125,6 +117,14 @@ export default function TopNav() {
             >
               <NavIcon src="/Playground%201.png" />
               <span className="intro__pill">Playground</span>
+            </a>
+            <a
+              href="/note"
+              className="intro__nav-group"
+              onClick={linkTo('/note')}
+            >
+              <NavIcon src="/Note%201.png" />
+              <span className="intro__pill">Note</span>
             </a>
           </nav>
 

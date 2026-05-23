@@ -51,3 +51,69 @@ main {
 .pill:hover {
   background: rgba(255, 255, 255, 0.08);
 }
+
+/* ---- Page transition (route swap) ----
+   Guglieri-style curtain wipe. A full-viewport panel slides up from below
+   to cover the page (`veilIn`), the route swaps invisibly behind it, then
+   the same panel continues sliding up past the top edge to reveal the new
+   page underneath (`veilOut`). The content itself doesn't transform — only
+   the standalone panel does — so the sticky TopNav stays put. */
+.page__content--leaving,
+.page__content--entering {
+  pointer-events: none;
+}
+
+.page__veil {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  background: var(--bg);
+  transform: translate3d(0, 100%, 0);
+  visibility: hidden;
+  will-change: transform;
+}
+
+.page__veil--in {
+  visibility: visible;
+  animation: veilIn 520ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.page__veil--hold {
+  visibility: visible;
+  transform: translate3d(0, 0%, 0);
+}
+
+.page__veil--out {
+  visibility: visible;
+  animation: veilOut 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes veilIn {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0%, 0);
+  }
+}
+
+@keyframes veilOut {
+  from {
+    transform: translate3d(0, 0%, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page__veil--in,
+  .page__veil--out {
+    animation: none;
+  }
+  .page__veil--in {
+    transform: translate3d(0, 0%, 0);
+    visibility: visible;
+  }
+}

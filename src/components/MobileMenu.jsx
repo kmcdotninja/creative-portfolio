@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './MobileMenu.css'
 import { useSnd } from '../hooks/useSnd.js'
-import { navigate } from '../lib/router.js'
+import { navigate, usePathname } from '../lib/router.js'
 
 function SunIcon() {
   return (
@@ -41,6 +41,7 @@ export default function MobileMenu({
   onToggleTheme,
 }) {
   const { play, SOUNDS } = useSnd()
+  const pathname = usePathname()
   const drawerRef = useRef(null)
   const dragRef = useRef({ startY: 0, dragging: false, dy: 0 })
   const [dragY, setDragY] = useState(0)
@@ -142,22 +143,22 @@ export default function MobileMenu({
         <div className="mm__brand">Yahaya Muhammad</div>
 
         <div className="mm__nav">
-          <a href="#work" className="mm__card" onClick={handleNavClick}>
-            <img src="/Work%201.png" alt="" className="mm__card-icon" />
-            <span>Work</span>
-          </a>
           <a
-            href="/note"
+            href={pathname === '/' ? '#work' : '/'}
             className="mm__card"
             onClick={(e) => {
-              e.preventDefault()
               play(SOUNDS.BUTTON)
               onClose()
-              navigate('/note')
+              if (pathname !== '/') {
+                e.preventDefault()
+                navigate('/')
+              }
+              // On home, default anchor handler in useScrollAnimations will
+              // smooth-scroll to #work.
             }}
           >
-            <img src="/Note%201.png" alt="" className="mm__card-icon" />
-            <span>Note</span>
+            <img src="/Work%201.png" alt="" className="mm__card-icon" />
+            <span>Work</span>
           </a>
           <a
             href="/playground"
@@ -171,6 +172,19 @@ export default function MobileMenu({
           >
             <img src="/Playground%201.png" alt="" className="mm__card-icon" />
             <span>Playground</span>
+          </a>
+          <a
+            href="/note"
+            className="mm__card"
+            onClick={(e) => {
+              e.preventDefault()
+              play(SOUNDS.BUTTON)
+              onClose()
+              navigate('/note')
+            }}
+          >
+            <img src="/Note%201.png" alt="" className="mm__card-icon" />
+            <span>Note</span>
           </a>
         </div>
 
