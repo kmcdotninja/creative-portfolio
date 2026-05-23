@@ -3,9 +3,9 @@ import { playground } from '../data.js'
 
 export default function Playground() {
   return (
-    <div className="pg__feed" data-reveal-stagger>
+    <div className="pg__feed">
       {playground.map((src, i) => (
-        <figure key={i} className="pg__card">
+        <figure key={i} className="pg__card" data-reveal-card>
           <img
             src={src}
             alt=""

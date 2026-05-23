@@ -1,12 +1,12 @@
 /* ---- Masonry feed (CSS columns) ---- */
 .pg__feed {
   column-count: 3;
-  column-gap: clamp(16px, 2vw, 28px);
+  column-gap: 7px;
 }
 
 .pg__card {
   break-inside: avoid;
-  margin: 0 0 clamp(16px, 2vw, 28px);
+  margin: 0 0 7px;
   display: block;
   border-radius: 16px;
   overflow: hidden;

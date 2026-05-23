@@ -249,7 +249,7 @@
 .pd__section-rows {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2vw, 28px);
+  gap: 7px;
 }
 
 /* ---- Next project CTA ---- */
@@ -315,7 +315,7 @@
 
 .pd__row {
   display: grid;
-  gap: clamp(16px, 2vw, 28px);
+  gap: 7px;
 }
 
 .pd__row--single {
