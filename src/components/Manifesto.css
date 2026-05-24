@@ -103,7 +103,7 @@
     max-width: 100%;
   }
   .manifesto__text {
-    font-size: clamp(22px, 6vw, 32px);
+    font-size: clamp(22px, 6vw, 48px);
     line-height: 1.35;
   }
   .manifesto__sig svg {
