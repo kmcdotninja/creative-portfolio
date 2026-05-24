@@ -18,6 +18,7 @@ export const playground = [
   '/Playground/Card%208.png',
   '/Playground/Card%2018.png',
   '/Playground/Waeed%20Logo.png',
+  '/Playground/Card%20Waeed.png',
   '/Playground/Card%209.png',
   '/Playground/Card%2010.png',
   '/Playground/Card%2011.png',
