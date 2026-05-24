@@ -144,9 +144,27 @@ export default function Footer() {
         <span className="footer__copy">© 2026 Yahaya Muhammad</span>
         <Clock />
         <nav className="footer__links" aria-label="elsewhere">
-          <a href="#">Twitter (X)</a>
-          <a href="#">Instagram</a>
-          <a href="#">LinkedIn</a>
+          <a
+            href="https://x.com/kmcdotninja"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Twitter (X)
+          </a>
+          <a
+            href="https://www.instagram.com/kmcdotninja"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram
+          </a>
+          <a
+            href="https://www.linkedin.com/in/yahyabinmuhammad/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
         </nav>
       </footer>
     </>
