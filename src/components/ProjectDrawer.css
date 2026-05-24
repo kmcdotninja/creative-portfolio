@@ -37,7 +37,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(92vw, 1280px);
+  width: min(83vw, 1152px);
   background: var(--bg);
   color: var(--text);
   border-left: 1px solid var(--border);
@@ -97,6 +97,70 @@
 
 .pd__close:active {
   transform: scale(0.96);
+}
+
+/* Floating X in the scrim area — desktop only. Sits in the empty space to
+   the left of the panel so the close affordance is reachable without
+   travelling to the panel header. */
+.pd__close-float {
+  position: fixed;
+  top: clamp(16px, 2vw, 26px);
+  right: calc(min(83vw, 1152px) + clamp(14px, 1.4vw, 24px));
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  color: #fff;
+  border: 1px solid var(--border);
+  /* border-radius: 12px; */
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pd__close-float svg {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pd__close-float:hover svg {
+  transform: rotate(180deg);
+}
+
+.pd--open .pd__close-float {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.pd__close-float:hover {
+  background: #1a1a1a;
+}
+
+.pd__close-float:active {
+  transform: scale(0.94);
+}
+
+[data-theme='light'] .pd__close-float {
+  background: #fff;
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .pd__close-float:hover {
+  background: #f5f3ee;
+}
+
+@media (max-width: 900px) {
+  .pd__close-float {
+    display: none;
+  }
 }
 
 /* ---- Scrolling content ---- */

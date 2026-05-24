@@ -54,6 +54,7 @@ export const projects = [
       '/Kutuby%20Project/Character%20Bird.png',
       '/Kutuby%20Project/Character%20Cat.png',
       '/Kutuby%20Project/Character%20Elephant.png',
+      '/Kutuby%20Project/Character%20Stickers.png',
       '/Kutuby%20Project/Mobile%20App%201.png',
       '/Kutuby%20Project/Mobile%20App%202.png',
       '/Kutuby%20Project/Components.png',
@@ -86,6 +87,7 @@ export const projects = [
           '/Kutuby%20Project/Character%20Bird.png',
           '/Kutuby%20Project/Character%20Cat.png',
           '/Kutuby%20Project/Character%20Elephant.png',
+          '/Kutuby%20Project/Character%20Stickers.png',
         ],
       },
       {
