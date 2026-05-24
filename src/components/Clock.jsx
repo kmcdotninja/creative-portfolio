@@ -1,22 +1,17 @@
 import { useEffect, useState } from 'react'
 import './Clock.css'
 
-function format(date) {
-  const hh = String(date.getHours()).padStart(2, '0')
-  const mm = String(date.getMinutes()).padStart(2, '0')
-  const ss = String(date.getSeconds()).padStart(2, '0')
-  return `${hh}:${mm}:${ss}`
-}
+// Kaduna shares Africa/Lagos (WAT, UTC+1).
+const TIME_ZONE = 'Africa/Lagos'
+const ZONE_LABEL = 'GMT+1'
 
-function getZoneLabel() {
-  try {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const city = tz.split('/').pop().replace(/_/g, ' ')
-    return city
-  } catch {
-    return 'LOCAL'
-  }
-}
+const formatter = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+  timeZone: TIME_ZONE,
+})
 
 export default function Clock() {
   const [now, setNow] = useState(() => new Date())
@@ -27,10 +22,10 @@ export default function Clock() {
   }, [])
 
   return (
-    <div className="clock" aria-label="local time">
+    <div className="clock" aria-label="Kaduna time (GMT+1)">
       <span className="clock__dot" />
-      <span className="clock__time">{format(now)}</span>
-      <span className="clock__zone">{getZoneLabel()}</span>
+      <span className="clock__time">{formatter.format(now)}</span>
+      <span className="clock__zone">{ZONE_LABEL}</span>
     </div>
   )
 }

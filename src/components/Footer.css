@@ -62,7 +62,7 @@
 .footer-art__contact {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
