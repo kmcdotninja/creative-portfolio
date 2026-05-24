@@ -218,6 +218,19 @@
   color: var(--text);
 }
 
+.footer__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+@media (max-width: 700px) {
+  .footer__status {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
 .footer__links {
   display: flex;
   gap: 28px;

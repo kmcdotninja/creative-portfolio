@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import './Footer.css'
 import Clock from './Clock.jsx'
+import LastUpdated from './LastUpdated.jsx'
 import CopyToast from './CopyToast.jsx'
 import { useSnd } from '../hooks/useSnd.js'
 
@@ -181,7 +182,10 @@ export default function Footer() {
 
       <footer className="footer">
         <span className="footer__copy">© 2026 Yahaya Muhammad</span>
-        <Clock />
+        <div className="footer__status">
+          <Clock />
+          <LastUpdated />
+        </div>
         <nav className="footer__links" aria-label="elsewhere">
           <a
             href="https://github.com/kmcdotninja"

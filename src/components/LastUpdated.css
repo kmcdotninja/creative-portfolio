@@ -1,0 +1,18 @@
+.last-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.1px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.last-updated__label {
+  color: var(--text-dim);
+}
+
+.last-updated__date {
+  color: var(--text);
+}
