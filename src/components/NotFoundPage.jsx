@@ -24,7 +24,6 @@ export default function NotFoundPage() {
 
       <main className="nf">
         <div className="nf__inner" data-reveal>
-          <span className="nf__eyebrow">Error 404</span>
           <h1 className="nf__title">
             Lost in
             <br />
@@ -35,7 +34,7 @@ export default function NotFoundPage() {
             get you back to something real.
           </p>
           <a href="/" className="nf__cta" onClick={goHome}>
-            ← Take me home
+            Take me home
           </a>
         </div>
       </main>
