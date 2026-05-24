@@ -71,6 +71,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   background: #f5f3ee;
   color: #0a0a0a;
   border: 0;
