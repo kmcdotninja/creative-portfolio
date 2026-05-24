@@ -308,7 +308,6 @@
   width: 100%;
   height: auto;
   border-radius: 14px;
-  border: 1px solid var(--border);
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -336,7 +335,6 @@
   border-radius: 14px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--border);
   display: block;
 }
 

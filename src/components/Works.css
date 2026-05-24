@@ -7,18 +7,6 @@
   position: relative;
 }
 
-.project::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 1px;
-  background: var(--border);
-  pointer-events: none;
-}
-
 .project__title {
   font-family: var(--display);
   font-weight: 400;
