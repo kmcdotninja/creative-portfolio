@@ -87,6 +87,15 @@
   white-space: nowrap;
 }
 
+/* Pin the copy button to its widest label so swapping the text from
+   "Copy email" → "Copied" doesn't shrink the pill. Without this the
+   width change reflows the flex row on narrow viewports, which on
+   mobile yanks the button up next to the email and snaps it back when
+   the label reverts. */
+.footer-art__copy {
+  min-width: 132px;
+}
+
 .footer-art__email:hover {
   background: #fff;
 }
