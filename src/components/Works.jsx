@@ -20,12 +20,16 @@ function Project({ project, onOpen }) {
   const [grabbing, setGrabbing] = useState(false)
   const [pillVisible, setPillVisible] = useState(false)
 
-  // Auto-scroll + seamless loop
+  // Auto-scroll + seamless loop.
+  // Safari rounds `scrollLeft` to an integer, so writing back `current + 0.5`
+  // gets re-rounded to `current` and the scroller appears frozen. We
+  // accumulate fractional deltas and only apply whole-pixel steps.
   useEffect(() => {
     const el = scrollerRef.current
     if (!el) return
 
     let rafId
+    let acc = 0
     const half = () => el.scrollWidth / 2
 
     const normalise = () => {
@@ -37,8 +41,13 @@ function Project({ project, onOpen }) {
 
     const tick = () => {
       if (!hoverRef.current && !dragRef.current.dragging) {
-        el.scrollLeft += AUTO_SPEED_PX_PER_FRAME
-        normalise()
+        acc += AUTO_SPEED_PX_PER_FRAME
+        if (acc >= 1) {
+          const step = Math.floor(acc)
+          el.scrollLeft += step
+          acc -= step
+          normalise()
+        }
       }
       rafId = requestAnimationFrame(tick)
     }

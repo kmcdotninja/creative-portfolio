@@ -76,6 +76,10 @@
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  /* Safari: keep programmatic scrollLeft writes synchronous (a global
+     scroll-behavior: smooth would animate every per-frame update). */
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .project__scroller::-webkit-scrollbar {
