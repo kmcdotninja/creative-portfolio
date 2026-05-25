@@ -15,7 +15,10 @@ const GRID = 17
 const LOGO = 5 // 5x5 cell area reserved for the centered favicon
 
 // Deterministic per-cell intensity (0..4), mimicking a GitHub contribution
-// heatmap. Cells inside the center logo pocket are skipped.
+// heatmap. Cells inside the center logo pocket are skipped. A second
+// independent pseudo-random pass picks a sparse subset of the
+// higher-level cells to receive a soft glow — "spotlights" sprinkled
+// across the heatmap so the grid feels alive instead of uniformly lit.
 function buildCells() {
   const start = (GRID - LOGO) / 2
   const end = start + LOGO
@@ -32,7 +35,15 @@ function buildCells() {
       if (rand > 0.6) level = 2
       if (rand > 0.78) level = 3
       if (rand > 0.91) level = 4
-      cells.push({ c, r, level })
+
+      // Different prime offsets so the glow distribution doesn't track
+      // the level distribution exactly — only level-2+ cells qualify so
+      // glows never appear on empty cells.
+      const gseed = Math.sin((c + 5) * 53.711 + (r + 3) * 17.917) * 91823.42
+      const grand = gseed - Math.floor(gseed)
+      const glow = level >= 2 && grand > 0.78
+
+      cells.push({ c, r, level, glow })
     }
   }
   return cells
@@ -111,10 +122,12 @@ export default function CommitSticker() {
         style={{ '--grid': GRID, '--logo': LOGO }}
         aria-hidden="true"
       >
-        {cells.map(({ c, r, level }) => (
+        {cells.map(({ c, r, level, glow }) => (
           <span
             key={`${c}-${r}`}
-            className={`commit-sticker__cell commit-sticker__cell--l${level}`}
+            className={`commit-sticker__cell commit-sticker__cell--l${level}${
+              glow ? ' commit-sticker__cell--glow' : ''
+            }`}
             style={{
               '--c': c + 1,
               '--r': r + 1,

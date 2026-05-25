@@ -51,31 +51,36 @@
   --rz: 0deg;
   --lift: -4px;
   /* During hover, snap to the cursor — the leave transition above smooths
-     the return. */
+     the return. The extra coloured layer on top is a soft green halo so
+     the whole card reads as glowing, not just lifted. */
   transition: transform 0.12s ease-out, box-shadow 0.4s ease;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.55) inset,
     0 6px 14px rgba(0, 0, 0, 0.08),
     0 20px 38px rgba(0, 0, 0, 0.12),
-    0 34px 70px rgba(0, 0, 0, 0.12);
+    0 34px 70px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(57, 211, 83, 0.12),
+    0 0 30px rgba(57, 211, 83, 0.22),
+    0 0 70px rgba(57, 211, 83, 0.18);
 }
 
-/* Holo sheen — radial highlight tracks the cursor, screen-blended so it
-   reads as glare on the card surface rather than a hard color. */
+/* Holo sheen — radial highlight tracks the cursor and brightens the
+   spot directly under it. Screen-blended so it adds light instead of
+   painting a white blob. */
 .commit-sticker__sheen {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: screen;
   background: radial-gradient(
-    70px circle at var(--gx) var(--gy),
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0.25) 30%,
-    rgba(255, 255, 255, 0) 75%
+    140px circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(155, 233, 168, 0.32) 35%,
+    rgba(57, 211, 83, 0) 75%
   );
-  transition: opacity 0.35s ease;
+  transition: opacity 0.3s ease;
   z-index: 3;
 }
 
@@ -149,6 +154,30 @@
   --base: var(--g4);
   --peak: var(--cell-peak-l4);
   background: var(--g4);
+}
+
+/* Spotlight cells: a sparse subset of the lit cells get a soft glowing
+   halo that breathes on the same cadence as the pulse, so the grid
+   feels like real commits flashing through the QR pattern. */
+.commit-sticker__cell--glow {
+  animation: cell-pulse 1s ease-in-out infinite,
+    cell-glow 1s ease-in-out infinite;
+}
+
+@keyframes cell-glow {
+  0%,
+  82%,
+  100% {
+    box-shadow:
+      0 0 4px var(--g3),
+      0 0 10px rgba(57, 211, 83, 0.35);
+  }
+  92% {
+    box-shadow:
+      0 0 7px var(--g4),
+      0 0 18px rgba(57, 211, 83, 0.65),
+      0 0 30px rgba(57, 211, 83, 0.35);
+  }
 }
 
 .commit-sticker__logo {
@@ -230,6 +259,29 @@
     0 2px 6px rgba(0, 0, 0, 0.06),
     0 8px 18px rgba(0, 0, 0, 0.08),
     0 20px 44px rgba(0, 0, 0, 0.1);
+}
+
+/* Darker greens for the glow on the light QR panel — the dark-theme
+   bright greens wash out against white. */
+[data-theme='light'] .commit-sticker__cell--glow {
+  animation: cell-pulse 1s ease-in-out infinite,
+    cell-glow-light 1s ease-in-out infinite;
+}
+
+@keyframes cell-glow-light {
+  0%,
+  82%,
+  100% {
+    box-shadow:
+      0 0 3px var(--g3),
+      0 0 8px rgba(48, 161, 78, 0.3);
+  }
+  92% {
+    box-shadow:
+      0 0 6px var(--g4),
+      0 0 14px rgba(33, 110, 57, 0.6),
+      0 0 24px rgba(33, 110, 57, 0.35);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

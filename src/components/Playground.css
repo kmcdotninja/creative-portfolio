@@ -4,15 +4,25 @@
   column-gap: 7px;
 }
 
+/* Layout-only wrapper. GSAP transforms this on scroll reveal — its
+   transform composes with the inner card's hover transform so the
+   reveal/return motion and the cursor tilt never fight each other. */
+.pg__card-frame {
+  break-inside: avoid;
+  margin: 0 0 7px;
+  display: block;
+  position: relative;
+  will-change: transform;
+}
+
 .pg__card {
   /* Cursor-driven custom properties — JS updates these on pointermove. */
   --rx: 0deg;
   --ry: 0deg;
   --lift: 0px;
 
-  break-inside: avoid;
-  margin: 0 0 7px;
   display: block;
+  margin: 0;
   border-radius: 16px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.04);

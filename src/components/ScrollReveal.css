@@ -74,34 +74,36 @@
 /* On narrow screens the polaroid still rides the scroll, just at a
    smaller size and without the caption row so it doesn't cover the
    words even when it has to share width with the text column. */
+/* On mobile/tablet the scroll-driven polaroid jittered too much, so
+   instead we hang a static smaller polaroid in the bottom-right of
+   the section — tucked above the signature, alongside the end of
+   the last paragraph. No GSAP transforms run at this width. */
 @media (max-width: 1100px) {
+  .sr__art {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 4px 160px 0;
+  }
   .sr__polaroid-wrap {
-    width: 110px;
-    /* Sits partly past the right rail at rest — ~55px of the polaroid
-       peeks past the section edge, the other ~55px hides past it. The
-       JS slide-in pulls it left to land overlaying the right rail line. */
-    right: -55px;
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 130px;
+    transform: rotate(-5deg);
+    will-change: auto;
   }
   .sr__polaroid {
     padding: 8px 8px 8px;
-    border-radius: 14px;
-    /* Lighter, single-layer shadow on mobile — the multi-tier desktop
-       shadow forces a wide repaint region every frame while the card
-       moves/rotates, which was contributing to the scroll flicker. */
+    border-radius: 16px;
     box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.45) inset,
-      0 6px 14px rgba(0, 0, 0, 0.08);
-    /* Keep the card on its own compositor layer. */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-  .sr__polaroid-wrap {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+      0 6px 16px rgba(0, 0, 0, 0.18),
+      0 20px 36px rgba(0, 0, 0, 0.22);
   }
   .sr__polaroid img {
-    height: 130px;
-    border-radius: 10px;
+    height: 150px;
+    border-radius: 12px;
   }
   .sr__polaroid-cap {
     display: none;

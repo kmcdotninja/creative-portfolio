@@ -27,21 +27,22 @@ function Card({ src }) {
   }
 
   return (
-    <figure
-      ref={ref}
-      className="pg__card"
-      data-reveal-card
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-    >
-      <img
-        src={src}
-        alt=""
-        className="pg__img"
-        loading="lazy"
-        draggable={false}
-      />
-    </figure>
+    <div className="pg__card-frame" data-reveal-card>
+      <figure
+        ref={ref}
+        className="pg__card"
+        onPointerMove={onMove}
+        onPointerLeave={onLeave}
+      >
+        <img
+          src={src}
+          alt=""
+          className="pg__img"
+          loading="lazy"
+          draggable={false}
+        />
+      </figure>
+    </div>
   )
 }
 

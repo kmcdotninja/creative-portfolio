@@ -103,10 +103,14 @@ export default function ScrollReveal() {
       // itself zigzags left/right + rotates. At progress 1 the wrap
       // settles just above the signature so the polaroid rests at the
       // bottom of the note.
+      //
+      // Mobile (<1100px) skips this entirely — the polaroid is rendered
+      // as a static tucked-in element via CSS instead. The scroll
+      // animation flickered too much on touch devices.
       const polaroid = polaroidRef.current
       const polaroidWrap = polaroidWrapRef.current
       const signature = signatureWrapRef.current
-      if (polaroid && polaroidWrap) {
+      if (polaroid && polaroidWrap && window.innerWidth >= 1100) {
         // Layout reads (offsetHeight / getBoundingClientRect) used to
         // run every scroll frame inside onUpdate — alongside GSAP's
         // transform writes that caused forced reflows and visible

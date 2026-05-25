@@ -172,7 +172,11 @@
   font-weight: 600;
 }
 
-@media (min-width: 760px) {
+/* Hide the drawer once the desktop pill nav is visible (≥1025px). Below
+   that — phone all the way through iPad Mini / iPad Air at 768–1024px —
+   the drawer needs to render so the hamburger trigger has something to
+   open. */
+@media (min-width: 1025px) {
   .mm {
     display: none;
   }

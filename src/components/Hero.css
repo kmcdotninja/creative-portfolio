@@ -331,7 +331,10 @@
   }
 }
 
-@media (max-width: 760px) {
+/* Swap to the mobile drawer menu through the tablet range too. The
+   desktop nav stays packed until ~1024px+ — anything narrower (iPad
+   Mini 768, iPad Air 820, iPad Pro 11 834…) gets the hamburger. */
+@media (max-width: 1024px) {
   .intro__nav,
   .intro__right {
     display: none;
@@ -346,6 +349,9 @@
     width: 36px;
     height: 36px;
   }
+}
+
+@media (max-width: 760px) {
   .intro__big {
     font-size: clamp(42px, 13.5vw, 108px);
     margin-top: clamp(16px, 3vh, 32px);
