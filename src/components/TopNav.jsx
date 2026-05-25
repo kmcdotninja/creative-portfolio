@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
+// Original bottom-sheet drawer kept around for later — swap the import
+// below if you want it back. The current UI uses the full-screen variant.
+// eslint-disable-next-line no-unused-vars
 import MobileMenu from './MobileMenu.jsx'
+import MobileMenu2 from './MobileMenu2.jsx'
 import CopyToast from './CopyToast.jsx'
 import { useSnd } from '../hooks/useSnd.js'
 import { useTheme } from '../hooks/useTheme.js'
@@ -163,7 +167,7 @@ export default function TopNav() {
         </div>
       </header>
 
-      <MobileMenu
+      <MobileMenu2
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         onCopyEmail={copyEmail}

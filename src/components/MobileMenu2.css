@@ -1,0 +1,191 @@
+/* Full-screen overlay variant of the mobile menu. Replaces the
+   bottom-sheet drawer with a stacked list + polaroid + socials.
+   The original MobileMenu remains in the tree for later use. */
+.mm2 {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  background: #0a0a0a;
+  color: #f5f3ee;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 18px var(--pad) 28px;
+  /* Slides in from the right edge and exits back to the same edge,
+     using the bottom-sheet drawer's open curve so the family still
+     feels consistent. */
+  transform: translateX(100%);
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mm2--open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ============ Top bar ============ */
+.mm2__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mm2__brand {
+  /* Matches the hero / TopNav wordmark exactly so the brand reads at
+     the same weight everywhere. */
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #f5f3ee;
+}
+
+/* Action chip cluster — dark-mode toggle + Mail, parked right above
+   the socials. Same visual family as the chips in the original
+   MobileMenu so the interaction primitives stay consistent across both
+   variants. The X close button at the top reuses the same chip class. */
+.mm2__actions {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.mm2__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f3ee;
+  color: #0a0a0a;
+  border: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.mm2__chip:hover {
+  background: #fff;
+}
+
+.mm2__chip:active {
+  transform: scale(0.96);
+}
+
+.mm2__chip--icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ============ Large stacked nav ============ */
+.mm2__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  /* Clip residual overflow on extreme narrow viewports — the negative
+     margin below pulls the icon into the text so total width stays
+     within frame in practice. */
+  overflow: hidden;
+}
+
+.mm2__item {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--display);
+  font-size: clamp(54px, 16vw, 88px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #f5f3ee;
+  letter-spacing: -0.01em;
+  padding: 4px 0;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mm2__item:hover {
+  opacity: 0.85;
+}
+
+.mm2__item:active {
+  transform: scale(0.98);
+}
+
+/* Icon sits at the end of the text and overlaps the last glyph(s) via
+   a negative margin in em units, so the overlap scales with the font
+   size. Pushed to -0.55em so the icon sinks well into the trailing
+   period/letters and the line keeps its space without wrapping. */
+.mm2__item img {
+  width: clamp(48px, 14vw, 82px);
+  height: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  margin-left: -0.55em;
+  transform: translateY(-0.08em);
+  pointer-events: none;
+}
+
+/* ============ Socials ============ */
+.mm2__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  padding-top: 18px;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #f5f3ee;
+}
+
+.mm2__social a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.mm2__social a:hover {
+  opacity: 0.6;
+}
+
+/* ============ Light theme ============ */
+[data-theme='light'] .mm2 {
+  background: #f5f3ee;
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .mm2__bar {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .mm2__brand,
+[data-theme='light'] .mm2__item,
+[data-theme='light'] .mm2__social {
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .mm2__chip {
+  background: #0a0a0a;
+  color: #f5f3ee;
+}
+
+[data-theme='light'] .mm2__chip:hover {
+  background: #1a1a1a;
+}
