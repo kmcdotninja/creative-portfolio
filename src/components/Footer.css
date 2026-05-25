@@ -125,7 +125,7 @@
      with the page rails on both sides — without disturbing the bio/CTA. */
   margin-left: calc(var(--rail) - var(--pad));
   margin-right: calc(var(--rail) - var(--pad));
-  margin-bottom: -0.22em;
+  margin-bottom: -0.28em;
 }
 
 .footer-art__icon {
