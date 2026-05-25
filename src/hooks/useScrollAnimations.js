@@ -101,6 +101,8 @@ export function useScrollAnimations(pathname) {
       // Playful per-card reveal: drop in with a touch of random rotation
       // and a soft overshoot. Each card has its own scrollTrigger so the
       // motion follows the scroll instead of firing in one big batch.
+      // `clearProps: 'transform'` on complete is essential — without it, the
+      // inline transform GSAP leaves behind blocks the CSS hover tilt.
       gsap.utils.toArray('[data-reveal-card]').forEach((el) => {
         const rotation = gsap.utils.random(-5, 5, 0.1)
         const xOffset = gsap.utils.random(-12, 12, 1)
@@ -122,10 +124,11 @@ export function useScrollAnimations(pathname) {
             x: 0,
             duration: 0.85,
             ease: 'back.out(1.4)',
+            clearProps: 'transform,transform-origin',
             scrollTrigger: {
               trigger: el,
               start: 'top 90%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )

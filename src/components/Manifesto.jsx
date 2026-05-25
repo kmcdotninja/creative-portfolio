@@ -220,8 +220,8 @@ export default function Manifesto() {
       >
         {showSignature && (
           <>
-            <span className="manifesto__sig-label">Yahaya Muhammad</span>
             <Signature play={play} reduced={reduced} />
+            <span className="manifesto__sig-label">Yahaya Muhammad</span>
           </>
         )}
       </div>

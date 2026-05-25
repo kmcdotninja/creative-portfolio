@@ -121,7 +121,6 @@ export default function ScrollReveal() {
       </div>
 
       <div ref={signatureWrapRef} className="sr__sign">
-        <span className="sr__name">Yahaya Muhammad</span>
         <svg
           width="244"
           height="88"
@@ -139,6 +138,7 @@ export default function ScrollReveal() {
             fill="none"
           />
         </svg>
+        <span className="sr__name">Yahaya Muhammad</span>
       </div>
     </section>
   )
