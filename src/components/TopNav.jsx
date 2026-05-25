@@ -119,12 +119,12 @@ export default function TopNav() {
               <span className="intro__pill">Playground</span>
             </a>
             <a
-              href="/note"
+              href="/about"
               className="intro__nav-group"
-              onClick={linkTo('/note')}
+              onClick={linkTo('/about')}
             >
               <NavIcon src="/Note%201.png" />
-              <span className="intro__pill">Note</span>
+              <span className="intro__pill">About</span>
             </a>
           </nav>
 

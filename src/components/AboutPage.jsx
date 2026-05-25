@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import './NotePage.css'
+import './AboutPage.css'
 import TopNav from './TopNav.jsx'
 import ScrollReveal from './ScrollReveal.jsx'
 import Footer from './Footer.jsx'
 
-export default function NotePage() {
+export default function AboutPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -13,7 +13,7 @@ export default function NotePage() {
     <>
       <TopNav />
 
-      <main className="note">
+      <main className="about">
         <ScrollReveal />
       </main>
 

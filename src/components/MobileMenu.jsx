@@ -190,17 +190,17 @@ export default function MobileMenu({
             <span>Playground</span>
           </a>
           <a
-            href="/note"
+            href="/about"
             className="mm__card"
             onClick={(e) => {
               e.preventDefault()
               play(SOUNDS.BUTTON)
               onClose()
-              navigate('/note')
+              navigate('/about')
             }}
           >
             <img src="/Note%201.png" alt="" className="mm__card-icon" />
-            <span>Note</span>
+            <span>About</span>
           </a>
         </div>
 

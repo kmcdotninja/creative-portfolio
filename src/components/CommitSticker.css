@@ -184,17 +184,19 @@
 }
 
 .commit-sticker__label {
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  color: var(--ink-dim);
-  font-weight: 600;
+  font-family: 'Doto', var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  font-weight: 900;
 }
 
 .commit-sticker__date {
-  font-size: 10px;
-  letter-spacing: 0.08em;
+  font-family: 'Doto', var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.06em;
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
 
@@ -254,9 +256,9 @@
     height: 12px;
   }
   .commit-sticker__label {
-    font-size: 8.5px;
+    font-size: 10px;
   }
   .commit-sticker__date {
-    font-size: 9.5px;
+    font-size: 11px;
   }
 }

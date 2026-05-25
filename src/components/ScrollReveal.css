@@ -1,7 +1,88 @@
+/* The section spans the full content area now; the text column is
+   constrained on the .sr__paragraphs / .sr__sign children instead, so
+   the polaroid layer has room to sit in the side gutter without
+   covering the words. */
 .sr {
+  position: relative;
   width: 100%;
-  max-width: 100ch;
   margin-inline: auto;
+}
+
+/* ---- Floating polaroid ---- */
+/* Lives in an absolute layer that spans the full section width.
+   Polaroid wrap is pinned to the right gutter and never crosses into
+   the 100ch text column. */
+.sr__art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sr__polaroid-wrap {
+  position: absolute;
+  top: 0;
+  right: clamp(16px, 2vw, 40px);
+  width: 180px;
+  will-change: transform;
+}
+
+.sr__polaroid {
+  width: 100%;
+  background: #f5f3ee;
+  padding: 12px 12px 4px;
+  /* Matches the commit sticker's 20px outer radius for visual consistency. */
+  border-radius: 20px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 12px 28px rgba(0, 0, 0, 0.06),
+    0 28px 60px rgba(0, 0, 0, 0.06);
+  will-change: transform;
+  transform-origin: center;
+}
+
+.sr__polaroid img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  /* Mirrors the commit sticker's inner QR panel radius so both cards
+     read as the same design family. */
+  border-radius: 14px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.sr__polaroid-cap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 4px 4px;
+  /* Doto is a dotted/pixel display family — matches the polaroid's
+     "label printer" vibe and visually separates from the body sans. */
+  font-family: 'Doto', var(--sans);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #2a2825;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide the polaroid where the text fills the viewport — no gutter to
+   put it in without covering the paragraphs. */
+@media (max-width: 1100px) {
+  .sr__art {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr__art {
+    display: none;
+  }
 }
 
 /* ---- Paragraphs ---- */
@@ -9,6 +90,10 @@
   display: flex;
   flex-direction: column;
   gap: clamp(28px, 3.5vw, 56px);
+  max-width: 100ch;
+  margin-inline: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .sr__paragraph {
@@ -31,13 +116,16 @@
 
 /* ---- Signature block ---- */
 .sr__sign {
-  margin-top: clamp(56px, 8vw, 120px);
+  margin: clamp(20px, 3vw, 44px) auto 0;
+  max-width: 100ch;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
   opacity: 0;
   transition: opacity 0.5s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .sr__name {

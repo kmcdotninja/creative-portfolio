@@ -124,7 +124,7 @@ export default function CommitSticker() {
         ))}
 
         <span className="commit-sticker__logo">
-          <img src="/Favicon-Yahaya.png" alt="" />
+          <img src="/yahaya-hero.webp" alt="" />
         </span>
       </div>
 

@@ -1,4 +1,4 @@
-.note {
+.about {
   background: var(--bg);
   min-height: 100svh;
   padding: 156px var(--pad) clamp(80px, 10vw, 160px);
@@ -8,7 +8,7 @@
 }
 
 @media (max-width: 760px) {
-  .note {
+  .about {
     padding-top: 120px;
   }
 }

@@ -24,6 +24,8 @@ export default function ScrollReveal() {
   const rootRef = useRef(null)
   const signatureWrapRef = useRef(null)
   const pathRef = useRef(null)
+  const polaroidRef = useRef(null)
+  const polaroidWrapRef = useRef(null)
   const reduced = useReducedMotion()
 
   useEffect(() => {
@@ -96,6 +98,51 @@ export default function ScrollReveal() {
         })
       }
 
+      // The polaroid travels down through the section as you scroll
+      // (the wrap's translateY tracks scroll progress) and the card
+      // itself zigzags left/right + rotates. At progress 1 the wrap
+      // settles just above the signature so the polaroid rests at the
+      // bottom of the note.
+      const polaroid = polaroidRef.current
+      const polaroidWrap = polaroidWrapRef.current
+      const signature = signatureWrapRef.current
+      if (polaroid && polaroidWrap) {
+        // Amplitude stays within the right-side gutter. We size it from
+        // the distance between the polaroid's left edge and the text
+        // column's right edge so the swing never crosses into the words.
+        const amplitude = () => {
+          const wrapRect = polaroidWrap.getBoundingClientRect()
+          const paragraphs = root.querySelector('.sr__paragraphs')
+          const textRect = paragraphs?.getBoundingClientRect()
+          const safe = textRect
+            ? wrapRect.left - textRect.right - 24
+            : window.innerWidth * 0.08
+          return Math.min(110, Math.max(40, safe))
+        }
+        const maxY = () => {
+          const wrapH = polaroidWrap.offsetHeight
+          const limit = signature
+            ? signature.offsetTop - wrapH - 40
+            : root.offsetHeight - wrapH - 40
+          return Math.max(0, limit)
+        }
+        ScrollTrigger.create({
+          trigger: root,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.6,
+          onUpdate: (self) => {
+            const p = self.progress
+            const phase = p * Math.PI * 3
+            const x = Math.sin(phase) * amplitude()
+            const rot = Math.sin(phase + Math.PI / 5) * 7
+            const y = p * maxY()
+            gsap.set(polaroidWrap, { y })
+            gsap.set(polaroid, { x, rotation: rot })
+          },
+        })
+      }
+
       ScrollTrigger.refresh()
     }, rootRef)
 
@@ -104,6 +151,18 @@ export default function ScrollReveal() {
 
   return (
     <section ref={rootRef} className="sr">
+      <div className="sr__art" aria-hidden="true">
+        <div ref={polaroidWrapRef} className="sr__polaroid-wrap">
+          <div ref={polaroidRef} className="sr__polaroid">
+            <img src="/yahaya-hero.webp" alt="" loading="lazy" />
+            <div className="sr__polaroid-cap">
+              <span>KADUNA</span>
+              <span>MAR &lsquo;26</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="sr__paragraphs">
         {PARAGRAPHS.map((p, pi) => (
           <p key={pi} className="sr__paragraph">

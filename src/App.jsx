@@ -5,7 +5,7 @@ import Hero from './components/Hero.jsx'
 import HeroCentered from './components/HeroCentered.jsx'
 import Works from './components/Works.jsx'
 import PlaygroundPage from './components/PlaygroundPage.jsx'
-import NotePage from './components/NotePage.jsx'
+import AboutPage from './components/AboutPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
 import Footer from './components/Footer.jsx'
 import Loader from './components/Loader.jsx'
@@ -88,8 +88,8 @@ export default function App() {
   let body
   if (renderPath === '/playground') {
     body = <PlaygroundPage />
-  } else if (renderPath === '/note') {
-    body = <NotePage />
+  } else if (renderPath === '/about') {
+    body = <AboutPage />
   } else if (renderPath === '/') {
     body = (
       <>

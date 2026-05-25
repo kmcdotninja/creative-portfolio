@@ -316,7 +316,15 @@
   }
   .intro__about {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 14px;
+    padding-top: clamp(16px, 3.5vh, 40px);
+  }
+  /* Bump the 3D model ~30% on mobile and let the smaller about padding
+     pull the whole block (model first) higher into the viewport so it
+     reads bigger without crowding the title above. */
+  .intro__about > .portion {
+    width: clamp(300px, 72vw, 500px);
+    height: clamp(300px, 72vw, 500px);
   }
   .intro__scroll {
     justify-self: start;
