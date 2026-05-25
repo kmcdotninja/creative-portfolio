@@ -134,8 +134,15 @@ export default function ScrollReveal() {
           onUpdate: (self) => {
             const p = self.progress
             const phase = p * Math.PI * 3
-            const x = Math.sin(phase) * amplitude()
-            const rot = Math.sin(phase + Math.PI / 5) * 7
+            const isMobile = window.innerWidth < 1100
+            const rot = Math.sin(phase + Math.PI / 5) * (isMobile ? 5 : 7)
+            // Mobile: polaroid is parked off-screen (right: -75px). A reveal
+            // ramp pulls it ~85px left over the first 8% of scroll so it
+            // glides into full view, then a smaller wave keeps it moving
+            // without ever fully crossing the words.
+            const x = isMobile
+              ? -85 * Math.min(1, p * 12) + Math.sin(phase) * 20
+              : Math.sin(phase) * amplitude()
             const y = p * maxY()
             gsap.set(polaroidWrap, { y })
             gsap.set(polaroid, { x, rotation: rot })

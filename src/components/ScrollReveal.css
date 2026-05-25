@@ -71,10 +71,26 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Hide the polaroid where the text fills the viewport — no gutter to
-   put it in without covering the paragraphs. */
+/* On narrow screens the polaroid still rides the scroll, just at a
+   smaller size and without the caption row so it doesn't cover the
+   words even when it has to share width with the text column. */
 @media (max-width: 1100px) {
-  .sr__art {
+  .sr__polaroid-wrap {
+    width: 110px;
+    /* Sits mostly off-screen at rest (only ~35px peeks past the right
+       edge) so the paragraphs aren't covered before the user scrolls.
+       The JS reveal pulls it fully into view shortly after scroll begins. */
+    right: -75px;
+  }
+  .sr__polaroid {
+    padding: 8px 8px 8px;
+    border-radius: 14px;
+  }
+  .sr__polaroid img {
+    height: 130px;
+    border-radius: 10px;
+  }
+  .sr__polaroid-cap {
     display: none;
   }
 }

@@ -4,11 +4,11 @@ import './Loader.css'
 import Portion from './Portion.jsx'
 import { useReducedMotion } from '../hooks/useReducedMotion.js'
 
-const COUNT_DUR = 2.0
+const COUNT_DUR = 5.3
 const HOLD_AFTER = 0.2
 const FADE_OUT = 0.45
 
-const MAX_WAIT_MS = 6000
+const MAX_WAIT_MS = 9000
 
 export default function Loader({ onDone, gateReady = true }) {
   const [percent, setPercent] = useState(0)
