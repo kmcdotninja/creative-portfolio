@@ -65,7 +65,7 @@ export default function MobileMenu2({
   theme,
   onToggleTheme,
 }) {
-  const { play, SOUNDS, KITS } = useSnd()
+  const { play, SOUNDS } = useSnd()
   const pathname = usePathname()
 
   // Body scroll lock + ESC to close — same pattern the original
@@ -99,9 +99,7 @@ export default function MobileMenu2({
   }, [open, onClose])
 
   const handleClose = () => {
-    // Industrial kit for the slide-out so the close feels mechanical
-    // rather than soft like the default UI sounds.
-    play(SOUNDS.TRANSITION_DOWN, { kit: KITS.INDUSTRIAL })
+    play(SOUNDS.TRANSITION_DOWN)
     onClose()
   }
 

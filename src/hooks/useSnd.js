@@ -42,9 +42,6 @@ export const KITS = {
 export function useSnd(kit = KITS.DEFAULT) {
   useEffect(() => {
     ensureKit(kit)
-    // Preload the industrial kit alongside the default so the menu
-    // transition has zero-latency audio the first time it's opened.
-    if (kit !== KITS.INDUSTRIAL) ensureKit(KITS.INDUSTRIAL)
   }, [kit])
 
   const play = useCallback(

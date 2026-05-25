@@ -45,7 +45,7 @@ function MoonIcon() {
 }
 
 export default function TopNav() {
-  const { play, SOUNDS, KITS } = useSnd()
+  const { play, SOUNDS } = useSnd()
   const { theme, toggleTheme } = useTheme()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -155,7 +155,7 @@ export default function TopNav() {
             type="button"
             className="intro__menu-btn"
             onClick={() => {
-              play(SOUNDS.TRANSITION_UP, { kit: KITS.INDUSTRIAL })
+              play(SOUNDS.TRANSITION_UP)
               setMenuOpen(true)
             }}
             aria-label="Open menu"
