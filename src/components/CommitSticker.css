@@ -113,6 +113,14 @@
   padding: var(--qr-pad);
   border-radius: 14px;
   background: var(--qr-bg);
+  /* When the sticker is wider than the QR panel's natural column track
+     (because the footer text in Doto can run a few pixels past it), the
+     grid container stretches but its fixed-width columns don't — leaving
+     an off-centre gap on the right. Centring the tracks distributes any
+     leftover space evenly on both sides so it reads as inset padding
+     rather than misalignment. */
+  justify-content: center;
+  align-content: center;
 }
 
 .commit-sticker__cell {
