@@ -1,0 +1,235 @@
+.commit-sticker {
+  /* Cursor-driven custom properties — JS sets these on pointermove and
+     clears them on leave so the resting tilt comes back smoothly. */
+  --rx: 0deg;
+  --ry: 0deg;
+  --rz: -3deg;
+  --lift: 0px;
+  --gx: 50%;
+  --gy: 50%;
+
+  --cell: 8px;
+  --gap: 2px;
+  --qr-pad: 12px;
+  --radius: 20px;
+  --paper: #f5f3ee;
+  --ink: #0a0a0a;
+  --ink-dim: #6b6862;
+  --qr-bg: #0d1117;
+  --cell-empty: #161b22;
+  --g1: #0e4429;
+  --g2: #006d32;
+  --g3: #26a641;
+  --g4: #39d353;
+
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 14px 12px;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--radius);
+  font-family: var(--sans);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 2px 6px rgba(0, 0, 0, 0.025),
+    0 8px 18px rgba(0, 0, 0, 0.03),
+    0 20px 44px rgba(0, 0, 0, 0.035);
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateZ(var(--rz)) rotateX(var(--rx))
+    rotateY(var(--ry)) translate3d(0, var(--lift), 0);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  will-change: transform;
+}
+
+.commit-sticker:hover {
+  --rz: 0deg;
+  --lift: -4px;
+  /* During hover, snap to the cursor — the leave transition above smooths
+     the return. */
+  transition: transform 0.12s ease-out, box-shadow 0.4s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 6px 14px rgba(0, 0, 0, 0.08),
+    0 20px 38px rgba(0, 0, 0, 0.12),
+    0 34px 70px rgba(0, 0, 0, 0.12);
+}
+
+/* Holo sheen — radial highlight tracks the cursor, screen-blended so it
+   reads as glare on the card surface rather than a hard color. */
+.commit-sticker__sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    220px circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0) 60%
+  );
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.commit-sticker:hover .commit-sticker__sheen {
+  opacity: 1;
+}
+
+.commit-sticker__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  line-height: 1;
+  padding: 0 2px;
+}
+
+.commit-sticker__gh {
+  display: block;
+  color: var(--ink);
+}
+
+.commit-sticker__qr {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--grid), var(--cell));
+  grid-template-rows: repeat(var(--grid), var(--cell));
+  gap: var(--gap);
+  padding: var(--qr-pad);
+  border-radius: 14px;
+  background: var(--qr-bg);
+}
+
+.commit-sticker__cell {
+  grid-column: var(--c);
+  grid-row: var(--r);
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 2px;
+  background: var(--cell-empty);
+  animation: cell-pulse 1s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+  will-change: background-color, transform;
+}
+
+.commit-sticker__cell--l0 {
+  animation: none;
+  background: var(--cell-empty);
+}
+
+.commit-sticker__cell--l1 {
+  --base: var(--g1);
+  --peak: var(--g2);
+  background: var(--g1);
+}
+
+.commit-sticker__cell--l2 {
+  --base: var(--g2);
+  --peak: var(--g3);
+  background: var(--g2);
+}
+
+.commit-sticker__cell--l3 {
+  --base: var(--g3);
+  --peak: var(--g4);
+  background: var(--g3);
+}
+
+.commit-sticker__cell--l4 {
+  --base: var(--g4);
+  --peak: #b6f0c1;
+  background: var(--g4);
+}
+
+.commit-sticker__logo {
+  --logo-size: calc(var(--logo) * var(--cell) + (var(--logo) - 1) * var(--gap));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  transform: translate(-50%, -50%);
+  padding: 3px;
+  background: #f5f3ee;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px var(--qr-bg);
+}
+
+.commit-sticker__logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.commit-sticker__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+  margin-top: 2px;
+}
+
+.commit-sticker__label {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--ink-dim);
+  font-weight: 600;
+}
+
+.commit-sticker__date {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes cell-pulse {
+  0%,
+  82%,
+  100% {
+    background: var(--base);
+    transform: scale(1);
+  }
+  92% {
+    background: var(--peak);
+    transform: scale(1.18);
+  }
+}
+
+[data-theme='light'] .commit-sticker {
+  --paper: #0a0a0a;
+  --ink: #f5f3ee;
+  --ink-dim: #8a8780;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 2px 6px rgba(0, 0, 0, 0.06),
+    0 8px 18px rgba(0, 0, 0, 0.08),
+    0 20px 44px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .commit-sticker__cell {
+    animation: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .commit-sticker {
+    --cell: 6px;
+    --gap: 1.5px;
+    --qr-pad: 10px;
+    padding: 12px 12px 10px;
+  }
+}

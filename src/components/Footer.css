@@ -126,7 +126,6 @@
   margin-left: calc(var(--rail) - var(--pad));
   margin-right: calc(var(--rail) - var(--pad));
   margin-bottom: -0.22em;
-  cursor: none;
 }
 
 .footer-art__icon {
@@ -137,6 +136,21 @@
   animation: trail-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity;
   z-index: 3;
+}
+
+.footer-art__sticker {
+  position: absolute;
+  top: 64px;
+  right: calc(var(--rail) + 32px);
+  z-index: 4;
+  pointer-events: auto;
+}
+
+@media (max-width: 900px) {
+  .footer-art__sticker {
+    position: static;
+    margin: -16px 0 32px;
+  }
 }
 
 .footer-art__letter-icon {

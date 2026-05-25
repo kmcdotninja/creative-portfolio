@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import './Footer.css'
 import Clock from './Clock.jsx'
-import LastUpdated from './LastUpdated.jsx'
+import CommitSticker from './CommitSticker.jsx'
 import CopyToast from './CopyToast.jsx'
 import { useSnd } from '../hooks/useSnd.js'
 
@@ -50,6 +50,10 @@ const ICONS = [
 ]
 
 const EMAIL = 'yahayabinmuhammad@gmail.com'
+
+// Flip to true to re-enable the YMD hover cursor-trail and the static
+// Y/M/D letter icons. Kept here so the behavior is easy to bring back.
+const TRAIL_ENABLED = false
 
 export default function Footer() {
   const { play, SOUNDS } = useSnd()
@@ -138,53 +142,61 @@ export default function Footer() {
 
         <span
           className="footer-art__text"
-          onMouseMove={spawn}
-          onMouseLeave={clear}
+          onMouseMove={TRAIL_ENABLED ? spawn : undefined}
+          onMouseLeave={TRAIL_ENABLED ? clear : undefined}
         >
           YMD
         </span>
 
-        <img
-          src="/Note%201.png"
-          alt=""
-          aria-hidden="true"
-          className="footer-art__letter-icon footer-art__letter-icon--y"
-        />
-        <img
-          src="/Work%201.png"
-          alt=""
-          aria-hidden="true"
-          className="footer-art__letter-icon footer-art__letter-icon--m"
-        />
-        <img
-          src="/Robot%201.png"
-          alt=""
-          aria-hidden="true"
-          className="footer-art__letter-icon footer-art__letter-icon--d"
-        />
+        <div className="footer-art__sticker">
+          <CommitSticker />
+        </div>
 
-        {trail.map((t) => (
-          <img
-            key={t.id}
-            src={t.icon}
-            alt=""
-            className="footer-art__icon"
-            style={{
-              left: t.x,
-              top: t.y,
-              width: t.size,
-              height: t.size,
-              '--rot': `${t.rotation}deg`,
-            }}
-          />
-        ))}
+        {TRAIL_ENABLED && (
+          <>
+            <img
+              src="/Note%201.png"
+              alt=""
+              aria-hidden="true"
+              className="footer-art__letter-icon footer-art__letter-icon--y"
+            />
+            <img
+              src="/Work%201.png"
+              alt=""
+              aria-hidden="true"
+              className="footer-art__letter-icon footer-art__letter-icon--m"
+            />
+            <img
+              src="/Robot%201.png"
+              alt=""
+              aria-hidden="true"
+              className="footer-art__letter-icon footer-art__letter-icon--d"
+            />
+          </>
+        )}
+
+        {TRAIL_ENABLED &&
+          trail.map((t) => (
+            <img
+              key={t.id}
+              src={t.icon}
+              alt=""
+              className="footer-art__icon"
+              style={{
+                left: t.x,
+                top: t.y,
+                width: t.size,
+                height: t.size,
+                '--rot': `${t.rotation}deg`,
+              }}
+            />
+          ))}
       </section>
 
       <footer className="footer">
         <span className="footer__copy">© 2026 Yahaya Muhammad</span>
         <div className="footer__status">
           <Clock />
-          <LastUpdated />
         </div>
         <nav className="footer__links" aria-label="elsewhere">
           <a
