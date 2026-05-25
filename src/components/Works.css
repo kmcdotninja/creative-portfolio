@@ -3,8 +3,15 @@
 }
 
 .project {
-  padding: 80px 0;
+  padding: 48px 0;
   position: relative;
+}
+
+/* Hairline separator between projects. Sits flush against the page
+   rails like the other section dividers. First project has no top
+   border because it's the start of the section. */
+.project + .project {
+  border-top: 1px solid var(--border);
 }
 
 .project__title {
@@ -16,6 +23,48 @@
   margin: 0 0 56px;
   padding: 0 var(--pad);
   text-transform: uppercase;
+}
+
+/* Diagonal corner ribbon for "coming soon" projects. The ribbon strip
+   is wider than its visible area and pulled into the top-left corner
+   at -45° so it reads as a printed sash across the project's corner.
+   `overflow: hidden` on .project--soon clips the ends that extend past
+   the section edge. */
+.project--soon {
+  overflow: hidden;
+}
+
+.project__ribbon {
+  position: absolute;
+  top: 30px;
+  left: -60px;
+  width: 220px;
+  padding: 7px 0;
+  background: #d4252a;
+  color: #fff;
+  text-align: center;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .project__ribbon {
+    top: 22px;
+    left: -64px;
+    width: 200px;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+  }
 }
 
 .project__info {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect } from 'react'
 import SndImport from 'snd-lib'
 
 // snd-lib ships as CJS with `exports.default = Snd`. Vite's ESM interop
@@ -6,50 +6,59 @@ import SndImport from 'snd-lib'
 // levels deep. Unwrap defensively.
 const Snd = SndImport?.default?.default || SndImport?.default || SndImport
 
-// Singleton across the React tree so the kit is only loaded once.
-let sndInstance = null
-let kitLoaded = false
-let loadPromise = null
+// One Snd instance per kit so we can play sounds from multiple kits
+// without paying the cost of swapping the active kit on every call.
+// Instances are module-level singletons so React mounts don't re-create
+// them.
+const instances = {}
+const loadPromises = {}
 
-function getSnd() {
-  if (!sndInstance) {
-    sndInstance = new Snd({ easySetup: false })
+function getInstance(kit) {
+  if (!instances[kit]) {
+    instances[kit] = new Snd({ easySetup: false })
   }
-  return sndInstance
+  return instances[kit]
 }
 
 function ensureKit(kit) {
-  if (kitLoaded) return Promise.resolve()
-  if (loadPromise) return loadPromise
-  loadPromise = getSnd()
+  if (loadPromises[kit]) return loadPromises[kit]
+  loadPromises[kit] = getInstance(kit)
     .load(kit)
-    .then(() => {
-      kitLoaded = true
-    })
     .catch(() => {
       // ignore — audio just won't play
     })
-  return loadPromise
+  return loadPromises[kit]
 }
 
-// snd-lib's KITS are simple string ids: "01", "02", "03"
-export function useSnd(kit = '01') {
-  const readyRef = useRef(false)
+// snd-lib's bundled kits. The industrial kit (SND03) has mechanical /
+// hardware-flavoured sounds; we use it for the mobile menu transitions
+// so the UI feels physical rather than synthetic.
+export const KITS = {
+  DEFAULT: '01',
+  ALT: '02',
+  INDUSTRIAL: '03',
+}
 
+export function useSnd(kit = KITS.DEFAULT) {
   useEffect(() => {
-    ensureKit(kit).then(() => {
-      readyRef.current = true
-    })
+    ensureKit(kit)
+    // Preload the industrial kit alongside the default so the menu
+    // transition has zero-latency audio the first time it's opened.
+    if (kit !== KITS.INDUSTRIAL) ensureKit(KITS.INDUSTRIAL)
   }, [kit])
 
-  const play = useCallback((sound) => {
-    if (!sound) return
-    try {
-      getSnd().play(sound)
-    } catch {
-      // ignore — autoplay may be blocked until a user gesture
-    }
-  }, [])
+  const play = useCallback(
+    (sound, options) => {
+      if (!sound) return
+      const targetKit = options?.kit ?? kit
+      try {
+        getInstance(targetKit).play(sound, options)
+      } catch {
+        // ignore — autoplay may be blocked until a user gesture
+      }
+    },
+    [kit],
+  )
 
   // SOUNDS keys are stable strings ('button', 'celebration', etc.).
   // Inline them so we don't depend on the static class field being resolved
@@ -72,5 +81,5 @@ export function useSnd(kit = '01') {
     TYPE: 'type',
   }
 
-  return { play, SOUNDS }
+  return { play, SOUNDS, KITS }
 }

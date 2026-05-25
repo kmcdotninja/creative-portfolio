@@ -37,7 +37,7 @@ export const projects = [
       'A learning app that turns Islamic studies for kids 6 to 12 into short, illustrated lessons that feel more like play than school.',
     roles: ['Product Design', 'Art Direction', 'Website Design', 'Interaction Design'],
     team: [
-      { name: 'Yahaya Muhammad', role: 'me' },
+      { name: 'Yahaya Muhammad', role: 'Product Designer' },
       { name: 'Oselu Irabor', role: 'Illustrator' },
       { name: 'Dave Joseph', role: 'Motion' },
       { name: 'Mohammad Ghayen', role: 'Developer' },
@@ -122,10 +122,8 @@ export const projects = [
       'A developer platform for shipping AI customer agents in days, not months. I designed Waffle end to end, from the wordmark to the marketing site that gets developers to the docs.',
     roles: ['Brand Identity', 'Web Design', 'Marketing Design', 'Art Direction'],
     team: [
-      { name: 'Yahaya Muhammad', role: 'me' },
-      { name: 'Sarah Chen', role: 'Engineering' },
-      { name: 'Marcus Webb', role: 'Voice' },
-      { name: 'Lena Park', role: 'Brand' },
+      { name: 'Yahaya Muhammad', role: 'Product Designer' },
+      { name: 'Sarah Chen', role: 'Frontend Engineer' },
     ],
     images: [
       '/Waffle%20Project/Logo.png',

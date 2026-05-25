@@ -140,7 +140,12 @@ function Project({ project, onOpen }) {
   }
 
   return (
-    <article className="project">
+    <article className={`project${comingSoon ? ' project--soon' : ''}`}>
+      {comingSoon && (
+        <span className="project__ribbon" aria-label="case study coming soon">
+          Coming Soon
+        </span>
+      )}
       <h2 className="project__title" data-reveal>{name}</h2>
 
       <div
