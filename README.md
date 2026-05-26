@@ -1,6 +1,6 @@
 ![Site Header](/readme-header.png)
 
-# Yahaya Muhammad - Portfolio
+# Yahaya Muhammad - Portfolio Website
 
 A live record of the work I'm proud of and the bits I'm still figuring out — selected case studies, smaller experiments, and a short letter about how I got from civil engineering to design.
 
