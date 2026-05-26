@@ -2,11 +2,11 @@
 
 # Yahaya Muhammad - Portfolio
 
-Part portfolio, part playground. A small, evolving space for selected work, in-between experiments, and notes about how I think about design.
+A live record of the work I'm proud of and the bits I'm still figuring out — selected case studies, smaller experiments, and a short letter about how I got from civil engineering to design.
 
-Currently designing at **Kutuby**, where we're making Islamic studies feel more like play than school for kids 6–12.
+Currently designing at **Kutuby**, building a learning app that turns Islamic studies for kids 6 to 12 into short, illustrated lessons that feel more like play than school.
 
-This site is forever changing. Expect frequent nitpick commits.
+I push to this repo often — sometimes a typography tweak, sometimes a new playground card. If it reads different next week, that's the point.
 
 Live at [creative-portfolio-orpin.vercel.app](https://creative-portfolio-orpin.vercel.app/).
 
