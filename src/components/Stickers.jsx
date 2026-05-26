@@ -169,7 +169,13 @@ export default function Stickers() {
               onDragTransitionEnd={() => handleDragTransitionEnd(i)}
               onDragEnd={() => handleDragEnd(i)}
             >
-              <img src={src} alt="" draggable={false} />
+              <img
+                src={src}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
             </motion.div>
           )
         })}

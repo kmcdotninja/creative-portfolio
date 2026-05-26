@@ -179,6 +179,7 @@ function Project({ project, onOpen }) {
                 src={src}
                 alt={i < images.length ? `${name} ${i + 1}` : ''}
                 loading="lazy"
+                decoding="async"
                 draggable={false}
               />
             </figure>
@@ -225,10 +226,14 @@ function Project({ project, onOpen }) {
 export default function Works() {
   const [openIndex, setOpenIndex] = useState(null)
   const openProject = openIndex !== null ? projects[openIndex] : null
-  const nextProject =
-    openIndex !== null
-      ? projects[(openIndex + 1) % projects.length]
-      : null
+  // Next-project hand-off is parked while Waffle is `comingSoon` — the
+  // cycle would land users in the placeholder drawer. The drawer keeps
+  // its `nextProject` / `onNext` props so we can re-wire it later by
+  // passing the cycle values back in.
+  // const nextProject =
+  //   openIndex !== null
+  //     ? projects[(openIndex + 1) % projects.length]
+  //     : null
 
   return (
     <section className="works" id="work">
@@ -237,10 +242,8 @@ export default function Works() {
       ))}
       <ProjectDrawer
         project={openProject}
-        nextProject={nextProject}
         open={openIndex !== null}
         onClose={() => setOpenIndex(null)}
-        onNext={() => setOpenIndex((i) => (i + 1) % projects.length)}
       />
     </section>
   )

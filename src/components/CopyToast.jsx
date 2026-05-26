@@ -42,6 +42,8 @@ export default function CopyToast({ visible }) {
         alt=""
         aria-hidden="true"
         className="copy-toast__image"
+        loading="lazy"
+        decoding="async"
       />
     </div>
   )

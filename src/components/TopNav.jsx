@@ -12,7 +12,15 @@ import { navigate, usePathname } from '../lib/router.js'
 const EMAIL = 'yahayabinmuhammad@gmail.com'
 
 function NavIcon({ src }) {
-  return <img src={src} alt="" className="voxel" />
+  return (
+    <img
+      src={src}
+      alt=""
+      className="voxel"
+      decoding="async"
+      fetchpriority="high"
+    />
+  )
 }
 
 function SunIcon() {

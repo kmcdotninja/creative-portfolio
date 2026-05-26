@@ -78,6 +78,8 @@ export default function Lightbox({
             src={images[current]}
             alt={`${projectName || ''} ${current + 1}`}
             className="lb__image"
+            decoding="async"
+            fetchpriority="high"
             draggable={false}
           />
         )}

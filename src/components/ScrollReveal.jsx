@@ -200,7 +200,12 @@ export default function ScrollReveal() {
       <div className="sr__art" aria-hidden="true">
         <div ref={polaroidWrapRef} className="sr__polaroid-wrap">
           <div ref={polaroidRef} className="sr__polaroid">
-            <img src="/yahaya-hero.webp" alt="" loading="lazy" />
+            <img
+              src="/yahaya-hero.webp"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
             <div className="sr__polaroid-cap">
               <span>KADUNA</span>
               <span>MAR &lsquo;26</span>

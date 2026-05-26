@@ -39,6 +39,8 @@ function Card({ src }) {
           alt=""
           className="pg__img"
           loading="lazy"
+          decoding="async"
+          fetchpriority="low"
           draggable={false}
         />
       </figure>
