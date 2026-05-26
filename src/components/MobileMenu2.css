@@ -27,13 +27,50 @@
   pointer-events: auto;
 }
 
+/* Vertical rail lines that mirror .page::before / .page::after so the
+   page's grid keeps reading underneath the menu instead of dropping
+   away. Positioned in viewport (fixed parent) space at var(--rail). */
+.mm2::before,
+.mm2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mm2::before {
+  left: var(--rail);
+}
+
+.mm2::after {
+  right: var(--rail);
+}
+
 /* ============ Top bar ============ */
 .mm2__bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 0 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Full-viewport horizontal divider beneath the top bar — extends past
+   the .mm2's --pad with negative offsets so the rule reaches the
+   vertical rails and the four lines cross cleanly at the corners. */
+.mm2__bar::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--pad) * -1);
+  right: calc(var(--pad) * -1);
+  bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
 }
 
 .mm2__brand {
@@ -89,6 +126,20 @@
   padding: 0;
   font-size: 13px;
   font-weight: 600;
+}
+
+/* The close button in the top bar is sized larger so it reads at the
+   same scale as the wordmark and the giant nav type underneath —
+   36px gets visually lost next to the huge headlines. The 14px icon
+   inside it scales up to match the new pill. */
+.mm2__bar .mm2__chip--icon {
+  width: 56px;
+  height: 56px;
+}
+
+.mm2__bar .mm2__chip--icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ============ Large stacked nav ============ */
@@ -171,8 +222,10 @@
   color: #0a0a0a;
 }
 
-[data-theme='light'] .mm2__bar {
-  border-color: rgba(0, 0, 0, 0.08);
+[data-theme='light'] .mm2::before,
+[data-theme='light'] .mm2::after,
+[data-theme='light'] .mm2__bar::after {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme='light'] .mm2__brand,

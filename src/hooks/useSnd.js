@@ -49,7 +49,9 @@ export function useSnd(kit = KITS.DEFAULT) {
       if (!sound) return
       const targetKit = options?.kit ?? kit
       try {
-        getInstance(targetKit).play(sound, options)
+        // Default to half-volume site-wide; callers can pass a custom
+        // `volume` in `options` to override per-play.
+        getInstance(targetKit).play(sound, { volume: 0.5, ...options })
       } catch {
         // ignore — autoplay may be blocked until a user gesture
       }
