@@ -45,6 +45,9 @@ export const projects = [
     ],
     // Flat array drives the horizontal scroller on the works page.
     images: [
+      '/Kutuby%20Project/Mobile%20App%201.png',
+      '/Kutuby%20Project/Mobile%20App%202.png',
+      '/Kutuby%20Project/Components.png',
       '/Kutuby%20Project/Logo.png',
       '/Kutuby%20Project/Type%202.png',
       '/Kutuby%20Project/Type%202-1.png',
@@ -56,9 +59,6 @@ export const projects = [
       '/Kutuby%20Project/Character%20Cat.png',
       '/Kutuby%20Project/Character%20Elephant.png',
       '/Kutuby%20Project/Character%20Stickers.png',
-      '/Kutuby%20Project/Mobile%20App%201.png',
-      '/Kutuby%20Project/Mobile%20App%202.png',
-      '/Kutuby%20Project/Components.png',
       '/Kutuby%20Project/Website.png',
       '/Kutuby%20Project/Website%202.png',
       '/Kutuby%20Project/Website%203.png',

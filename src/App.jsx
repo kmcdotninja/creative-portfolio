@@ -3,7 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react'
 import './App.css'
 import Hero from './components/Hero.jsx'
 import HeroCentered from './components/HeroCentered.jsx'
-import Works from './components/Works.jsx'
+import Works2 from './components/Works2.jsx'
 import PlaygroundPage from './components/PlaygroundPage.jsx'
 import AboutPage from './components/AboutPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
@@ -100,7 +100,7 @@ export default function App() {
     body = (
       <>
         {isDesktop ? <HeroCentered /> : <Hero />}
-        <Works />
+        <Works2 />
         <Footer />
       </>
     )

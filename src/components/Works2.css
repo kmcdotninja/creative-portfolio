@@ -1,0 +1,68 @@
+/* Works2 — masonry variant of the works section. Reuses .project,
+   .project__title, .project__info, .info-block* from Works.css so titles
+   and details stay consistent across both variants.
+
+   CSS-columns masonry mirrors the Playground feed: items break-inside
+   into columns and stack tightly regardless of intrinsic aspect ratio,
+   so wide screenshots and tall mobile mockups sit beside each other
+   without forced cropping. */
+
+.works--grid .project__grid {
+  column-count: 3;
+  column-gap: clamp(8px, 1vw, 14px);
+  padding: 0 var(--pad);
+  margin-bottom: 56px;
+}
+
+.works--grid .project__tile {
+  break-inside: avoid;
+  margin: 0 0 clamp(8px, 1vw, 14px);
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1a1a1a;
+  position: relative;
+  cursor: none;
+  transition: transform 0.25s ease;
+  /* Required for break-inside: avoid to be honoured by some engines. */
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.works--grid .project__tile:hover {
+  transform: translateY(-2px);
+}
+
+.works--grid .project__tile img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+@media (max-width: 900px) {
+  .works--grid .project__grid {
+    column-count: 2;
+    column-gap: 10px;
+  }
+  .works--grid .project__tile {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .works--grid .project__grid {
+    column-count: 1;
+  }
+  .works--grid .project__tile {
+    margin-bottom: 12px;
+    border-radius: 14px;
+  }
+}
+
+@media (hover: none) {
+  .works--grid .project__tile {
+    cursor: var(--cursor-pointer);
+  }
+}
