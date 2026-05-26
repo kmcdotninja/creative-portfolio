@@ -13,6 +13,7 @@ export default function Portion() {
   const cursorRef = useRef(null)
   const [hovering, setHovering] = useState(false)
   const [ready, setReady] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
 
   const onPointerMove = (e) => {
     const container = containerRef.current
@@ -49,6 +50,16 @@ export default function Portion() {
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.1
     container.appendChild(renderer.domElement)
+
+    // On touch devices, drag-to-rotate hijacks vertical scrolling. Skip
+    // input entirely so the page scrolls through the canvas — autoRotate
+    // doesn't depend on pointer events and keeps working.
+    const touchQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
+    const touch = touchQuery.matches
+    setIsTouch(touch)
+    if (touch) {
+      renderer.domElement.style.pointerEvents = 'none'
+    }
 
     // ---- HDR environment (PMREM from RoomEnvironment) ----
     const pmrem = new THREE.PMREMGenerator(renderer)
@@ -168,7 +179,7 @@ export default function Portion() {
     <div
       ref={containerRef}
       className={`portion${hovering ? ' portion--hovering' : ''}${ready ? ' portion--ready' : ''}`}
-      aria-label="3D model — drag to rotate"
+      aria-label={isTouch ? '3D model' : '3D model — drag to rotate'}
       onPointerEnter={(e) => {
         if (e.pointerType !== 'mouse') return
         setHovering(true)
