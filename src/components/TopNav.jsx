@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react'
+// Nav styles (`.intro__top`, `.intro__wordmark`, …) live in Hero.css.
+// TopNav imports them directly so it carries its own styling regardless
+// of which hero variant (Hero / HeroCentered / HeroStrip) is mounted.
+import './Hero.css'
 // Original bottom-sheet drawer kept around for later — swap the import
 // below if you want it back. The current UI uses the full-screen variant.
 // eslint-disable-next-line no-unused-vars

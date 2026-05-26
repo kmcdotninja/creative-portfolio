@@ -3,7 +3,12 @@ import { SpeedInsights } from '@vercel/speed-insights/react'
 import './App.css'
 import Hero from './components/Hero.jsx'
 import HeroCentered from './components/HeroCentered.jsx'
+// Parked — Dann-Petty-style minimal strip hero. Files kept for revert.
+// import HeroStrip from './components/HeroStrip.jsx'
 import Works2 from './components/Works2.jsx'
+// Parked — Playground teaser strip that sat between Works2 and the
+// Footer on the home page. Files kept for one-line revert.
+// import HomePlayground from './components/HomePlayground.jsx'
 import PlaygroundPage from './components/PlaygroundPage.jsx'
 import AboutPage from './components/AboutPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
@@ -101,6 +106,7 @@ export default function App() {
       <>
         {isDesktop ? <HeroCentered /> : <Hero />}
         <Works2 />
+        {/* <HomePlayground /> — parked, see import above. */}
         <Footer />
       </>
     )
