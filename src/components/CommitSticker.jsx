@@ -147,7 +147,7 @@ export default function CommitSticker() {
       </div>
 
       <div className="commit-sticker__foot">
-        <span className="commit-sticker__label">LAST COMMITS</span>
+        <span className="commit-sticker__label">LAST COMMIT</span>
         {formatted && <span className="commit-sticker__date">{formatted}</span>}
       </div>
     </div>
