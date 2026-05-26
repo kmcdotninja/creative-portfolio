@@ -1,4 +1,5 @@
 export const playground = [
+  '/Playground/AI%20icons.png',
   '/Playground/Card%2024%20-%20Hub.png',
   '/Playground/Card%2022%20-%20Hub.png',
   '/Playground/Card%2025%20-%20Hub-1.png',
