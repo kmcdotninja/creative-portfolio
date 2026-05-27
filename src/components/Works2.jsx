@@ -69,7 +69,7 @@ function Project({ project, onOpen }) {
 
       <div className="project__info" data-reveal-stagger>
         <div className="info-block">
-          <span className="info-block__label">Project</span>
+          <span className="info-block__label">Context</span>
           <p className="info-block__text">{description}</p>
         </div>
         <div className="info-block">
