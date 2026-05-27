@@ -13,22 +13,29 @@
 .pd__scrim {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  background: rgba(0, 0, 0, 0.42);
+  /* Starts unblurred while invisible; blur ramps in alongside the
+     opacity fade so the page visibly softens as the drawer slides in. */
+  backdrop-filter: blur(0px) saturate(120%);
+  -webkit-backdrop-filter: blur(0px) saturate(120%);
   border: 0;
   cursor: var(--cursor-pointer);
   padding: 0;
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    backdrop-filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-backdrop-filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .pd--open .pd__scrim {
   opacity: 1;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 [data-theme='light'] .pd__scrim {
-  background: rgba(20, 20, 22, 0.4);
+  background: rgba(20, 20, 22, 0.32);
 }
 
 /* ---- Panel (right-side drawer) ---- */
