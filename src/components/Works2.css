@@ -14,9 +14,21 @@
   margin-bottom: 56px;
 }
 
-.works--grid .project__tile {
+/* Layout-only wrapper — owns the masonry break/margin and the GSAP
+   scroll-reveal transform. The hover lift lives on the inner figure so
+   GSAP's inline transform on the frame and CSS hover transform on the
+   tile never overwrite each other. */
+.works--grid .project__tile-frame {
   break-inside: avoid;
   margin: 0 0 clamp(8px, 1vw, 14px);
+  display: block;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  will-change: transform;
+}
+
+.works--grid .project__tile {
+  margin: 0;
   display: block;
   border-radius: 16px;
   overflow: hidden;
@@ -24,9 +36,6 @@
   position: relative;
   cursor: none;
   transition: transform 0.25s ease;
-  /* Required for break-inside: avoid to be honoured by some engines. */
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
 }
 
 .works--grid .project__tile:hover {

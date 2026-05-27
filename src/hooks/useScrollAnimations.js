@@ -45,10 +45,44 @@ export function useScrollAnimations(pathname) {
     const refresh = () => ScrollTrigger.refresh()
     window.addEventListener('load', refresh)
 
+    // Lazy-loaded images and webfonts grow the page height AFTER our
+    // initial ScrollTrigger.refresh runs. Without re-refreshing, every
+    // trigger below the fold has stale start/end positions and reveals
+    // stop firing where they should. Debounce so a burst of image loads
+    // collapses into one refresh.
+    let imgRefreshTimer
+    const onAssetLoad = (e) => {
+      const tag = e.target?.tagName
+      if (tag !== 'IMG' && tag !== 'VIDEO') return
+      clearTimeout(imgRefreshTimer)
+      imgRefreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120)
+    }
+    // `load` doesn't bubble, so capture-phase is the only way to catch
+    // it from one document-level listener.
+    document.addEventListener('load', onAssetLoad, true)
+
+    // The loader applies `html.is-loading { overflow: hidden; height: 100% }`
+    // which shrinks the document while triggers are first calculated.
+    // Refresh again the instant that class comes off so triggers
+    // recompute against the real page height.
+    const html = document.documentElement
+    const classObserver = new MutationObserver(() => {
+      if (!html.classList.contains('is-loading')) {
+        setTimeout(() => ScrollTrigger.refresh(), 50)
+      }
+    })
+    classObserver.observe(html, {
+      attributes: true,
+      attributeFilter: ['class'],
+    })
+
     return () => {
       cancelAnimationFrame(rafId)
       document.removeEventListener('click', onAnchorClick)
       window.removeEventListener('load', refresh)
+      document.removeEventListener('load', onAssetLoad, true)
+      classObserver.disconnect()
+      clearTimeout(imgRefreshTimer)
       lenis.destroy()
       setLenis(null)
     }
@@ -145,7 +179,17 @@ export function useScrollAnimations(pathname) {
     // race with the fromTo initial state.
     window.dispatchEvent(new Event('app:reveal-ready'))
 
+    // Belt-and-suspenders refreshes for any image that loads in the
+    // narrow window between markup mounting and the capture-phase load
+    // listener catching its event. Cheap (<1ms each) and silently makes
+    // the "first scroll-down works, second navigation ceases" class of
+    // bug go away.
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 300)
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 1200)
+
     return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
       ctx?.revert()
     }
   }, [pathname])

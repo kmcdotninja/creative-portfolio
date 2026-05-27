@@ -45,24 +45,25 @@ function Project({ project, onOpen }) {
         {name}
       </h2>
 
-      <div className="project__grid" data-reveal>
+      <div className="project__grid">
         {images.map((src, i) => (
-          <figure
-            key={i}
-            className="project__tile"
-            onClick={openDrawer}
-            onPointerEnter={onImageEnter}
-            onPointerMove={onImageMove}
-            onPointerLeave={onImageLeave}
-          >
-            <img
-              src={src}
-              alt={`${name} ${i + 1}`}
-              loading="lazy"
-              decoding="async"
-              draggable={false}
-            />
-          </figure>
+          <div key={i} className="project__tile-frame" data-reveal-card>
+            <figure
+              className="project__tile"
+              onClick={openDrawer}
+              onPointerEnter={onImageEnter}
+              onPointerMove={onImageMove}
+              onPointerLeave={onImageLeave}
+            >
+              <img
+                src={src}
+                alt={`${name} ${i + 1}`}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
+            </figure>
+          </div>
         ))}
       </div>
 
