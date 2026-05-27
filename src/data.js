@@ -128,7 +128,6 @@ export const projects = [
     ],
     images: [
       '/Waffle%20Project/Logo.webp',
-      '/Waffle%20Project/Header.webp',
       '/Waffle%20Project/Hero%20Images.webp',
       '/Waffle%20Project/Features%201.webp',
       '/Waffle%20Project/Features%202.png',
@@ -147,10 +146,7 @@ export const projects = [
         heading: 'Hero',
         note:
           'The homepage carries the whole pitch in one scroll. I led with a confident promise, "Build, deploy, and scale AI customer agents", and backed it with one piece of real social proof: a 3-day launch story from an actual customer. The hero composition layers a chat bubble, a portrait, and a metric so a developer scanning the page picks up product, user, and proof in a single beat.',
-        images: [
-          '/Waffle%20Project/Header.webp',
-          '/Waffle%20Project/Hero%20Images.webp',
-        ],
+        images: ['/Waffle%20Project/Hero%20Images.webp'],
       },
       {
         heading: 'Features',
