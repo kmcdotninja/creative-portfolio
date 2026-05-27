@@ -71,6 +71,22 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Light-mode page: invert the polaroid so the cream card doesn't
+   disappear into the cream page. Dark-mode keeps the original cream
+   polaroid — already plenty of contrast against the dark page. */
+[data-theme='light'] .sr__polaroid {
+  background: #1a1a1a;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 12px 28px rgba(0, 0, 0, 0.1),
+    0 28px 60px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .sr__polaroid-cap {
+  color: #f5f3ee;
+}
+
 /* On mobile/tablet the scroll-driven zigzag jittered too much, so we
    ditch the GSAP transforms and drop the polaroid in absolutely. It
    sits above the signature area and rotates slightly so its body
