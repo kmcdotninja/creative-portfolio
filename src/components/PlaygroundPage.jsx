@@ -63,10 +63,6 @@ export default function PlaygroundPage() {
             {({ inView }) => <NeonTicker active={inView} />}
           </PlaygroundSection>
 
-          <PlaygroundSection title="Apple Carousel" meta="Drag · Snap" aspect="wide">
-            {() => <AppleCarousel items={carouselCards} autoPlay loop showControls showDots />}
-          </PlaygroundSection>
-
           <PlaygroundSection title="Number Flip Counter" meta="Spring · Roll" aspect="wide">
             {() => <NumberFlipCounter value={0} maxDigits={4} autoPlay duration={0.6} />}
           </PlaygroundSection>
@@ -75,6 +71,10 @@ export default function PlaygroundPage() {
             {({ inView }) => (
               <ThinkingStream active={inView} mode="analytical" accentColor="#37D15D" />
             )}
+          </PlaygroundSection>
+
+          <PlaygroundSection title="Apple Carousel" meta="Drag · Snap" aspect="wide">
+            {() => <AppleCarousel items={carouselCards} autoPlay loop showControls showDots />}
           </PlaygroundSection>
         </div>
       </main>

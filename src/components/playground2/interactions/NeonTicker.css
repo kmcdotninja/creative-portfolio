@@ -90,21 +90,21 @@
 }
 
 .pg2-neon__row--red {
-  color: #ff5253;
+  color: #ff0000;
   text-shadow:
-    0 0 2px #ff5253,
-    0 0 6px rgba(255, 82, 83, 0.95),
-    0 0 14px rgba(255, 82, 83, 0.7),
-    0 0 26px rgba(255, 60, 60, 0.45);
+    0 0 2px #ff0000,
+    0 0 6px rgba(255, 0, 0, 0.95),
+    0 0 14px rgba(255, 0, 0, 0.7),
+    0 0 26px rgba(255, 0, 0, 0.45);
 }
 
 .pg2-neon__row--green {
-  color: #5eff9a;
+  color: #00ff00;
   text-shadow:
-    0 0 2px #5eff9a,
-    0 0 6px rgba(94, 255, 154, 0.95),
-    0 0 14px rgba(94, 255, 154, 0.7),
-    0 0 26px rgba(60, 230, 130, 0.45);
+    0 0 2px #00ff00,
+    0 0 6px rgba(0, 255, 0, 0.95),
+    0 0 14px rgba(0, 255, 0, 0.7),
+    0 0 26px rgba(0, 255, 0, 0.45);
 }
 
 /* Bezel mask — characters fade into both pill ends. Lives above the
@@ -127,11 +127,13 @@
 @media (max-width: 600px) {
   .pg2-neon__stack {
     width: 94%;
-    gap: 8px;
+    gap: 10px;
   }
+  /* Taller pills on mobile so each LED row has presence at narrow widths
+     and the glow has room to read without crowding the next row. */
   .pg2-neon__row {
-    height: clamp(28px, 8.5vw, 44px);
-    font-size: clamp(18px, 5.6vw, 26px);
+    height: clamp(44px, 13vw, 64px);
+    font-size: clamp(22px, 7vw, 32px);
     letter-spacing: 0.04em;
   }
   .pg2-neon__text {
