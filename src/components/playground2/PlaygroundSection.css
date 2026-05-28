@@ -11,13 +11,7 @@
   width: 100%;
   overflow: hidden;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   background: #1c1c1e;
-  transition: border-color 0.3s ease;
-}
-
-.pg2-section__stage:hover {
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .pg2-section__stage--wide {
