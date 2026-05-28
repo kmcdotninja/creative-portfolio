@@ -13,10 +13,10 @@ import PlaygroundPage from './components/PlaygroundPage.jsx'
 import AboutPage from './components/AboutPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
 import Footer from './components/Footer.jsx'
-// Loader (3D bust) is parked. Files kept around so we can flip back later
-// by swapping the import + render below.
-// eslint-disable-next-line no-unused-vars
 import Loader from './components/Loader.jsx'
+// Loader3 (sticker-stack variant) is parked. Files kept around so we can
+// flip back later by swapping the import + render below.
+// eslint-disable-next-line no-unused-vars
 import Loader3 from './components/Loader3.jsx'
 import { useScrollAnimations } from './hooks/useScrollAnimations.js'
 import { usePathname } from './lib/router.js'
@@ -139,12 +139,11 @@ export default function App() {
       </div>
       <div className={veilClass} aria-hidden="true" />
       {loading && (
-        /* Loader 3 — sticker-stack variant. No 3D model, no portion-ready
-           event, so the gate is always green. The Loader.jsx variant above
-           is parked; swap this for `<Loader gateReady={portionReady} … />`
-           to revive the 3D bust. */
-        <Loader3
-          gateReady
+        /* Default loader — 3D bust. Swap for `<Loader3 gateReady … />` to
+           switch to the sticker-stack variant; that file + its CSS are
+           kept in the tree for one-line revert. */
+        <Loader
+          gateReady={portionReady}
           onDone={() => setLoading(false)}
         />
       )}
