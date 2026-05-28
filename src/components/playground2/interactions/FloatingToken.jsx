@@ -1,7 +1,14 @@
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 
-const SYMS = ['·', '+', '*', '✦', '◆', '○']
+// Same star + sparkle pool as the leading SymbolPulse — keeps the whole
+// stream visually coherent.
+const SYMS = [
+  '✦', '★',
+  '✶', '✷', '✸', '✴', '✵',
+  '✱', '✳', '❉', '❋',
+  '❄', '❅',
+]
 
 // Decorative ambient tokens drifting across the background. Procedurally
 // placed and animated; positions are stable per mount.

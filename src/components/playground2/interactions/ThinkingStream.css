@@ -25,7 +25,8 @@
 .pg2-think__row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  /* Tight gap — symbol reads as a leading mark on the word, not a separate token. */
+  gap: 6px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 30px;
   letter-spacing: -0.015em;
@@ -33,21 +34,50 @@
   line-height: 1;
 }
 
-/* ---- Symbol pulse ---- */
+/* ---- Symbol pulse ----
+   Container sized to comfortably contain the 1.2× pulse peak so the
+   glyph never visually escapes its slot. Both axes match — the rotating
+   wrapper stays a perfect square so the rotation never shifts neighbors. */
 .pg2-symbol {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   line-height: 1;
-  width: 0.85em;
-  height: 0.85em;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .pg2-symbol__inner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  /* Pulse scales from this exact center — keeps the glyph anchored
+     regardless of which star variant is showing. */
+  transform-origin: 50% 50%;
+}
+
+.pg2-symbol__inner > span,
+.pg2-symbol__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* The outgoing and incoming glyph stack on top of each other for an ~80ms
+   cross-fade. Absolute pin keeps both layers centered without nudging the
+   row layout when the fade overlaps. */
+.pg2-symbol__inner {
+  position: relative;
+}
+
+.pg2-symbol__glyph {
+  position: absolute;
+  inset: 0;
 }
 
 /* ---- Scramble text ---- */

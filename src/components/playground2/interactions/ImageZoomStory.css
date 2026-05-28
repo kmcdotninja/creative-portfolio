@@ -99,7 +99,8 @@
   }
 }
 
-/* Icon button base */
+/* Icon button base — matches .pg2-stickers__replay so the replay control
+   reads the same across all demos. */
 .pg2-zoom__icon-btn {
   display: flex;
   width: 36px;
@@ -107,18 +108,19 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  border: none;
   padding: 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
   transition: background-color 0.2s ease, transform 0.1s ease;
   cursor: var(--cursor-pointer, pointer);
 }
 
 .pg2-zoom__icon-btn:hover {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .pg2-zoom__icon-btn:active {

@@ -26,45 +26,36 @@
   cursor: var(--cursor-grabbing, grabbing);
 }
 
+/* Shared circular icon button — matches .pg2-zoom__icon-btn so all replay
+   controls across the playground demos read as one family. */
 .pg2-stickers__replay {
   position: absolute;
   right: 16px;
   top: 16px;
   /* Just above the stickers inside this card — never above the fixed nav. */
   z-index: 2;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  padding: 8px 16px;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  border-radius: 999px;
+  padding: 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  font-family: var(--sans, inherit);
-  transition: background-color 0.2s ease;
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s ease, transform 0.1s ease;
   cursor: var(--cursor-pointer, pointer);
 }
 
 .pg2-stickers__replay:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.7);
 }
 
-.pg2-stickers__hint {
-  pointer-events: none;
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  margin: 0;
-  transform: translateX(-50%);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.4);
-  opacity: 0;
-  transition: opacity 0.5s ease;
+.pg2-stickers__replay:active {
+  transform: scale(0.95);
 }
 
-.pg2-stickers__hint--shown {
-  opacity: 1;
-}

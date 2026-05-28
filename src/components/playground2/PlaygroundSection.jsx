@@ -16,9 +16,7 @@ export default function PlaygroundSection({
     <figure className={`pg2-section ${span === 'full' ? 'pg2-section--full' : ''}`}>
       <motion.div
         ref={stageRef}
-        className={`pg2-section__stage ${
-          aspect === 'square' ? 'pg2-section__stage--square' : 'pg2-section__stage--wide'
-        }`}
+        className={`pg2-section__stage pg2-section__stage--${aspect}`}
         initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0.2, y: 12 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

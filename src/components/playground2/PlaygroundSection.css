@@ -22,6 +22,18 @@
   aspect-ratio: 1 / 1;
 }
 
+.pg2-section__stage--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.pg2-section__stage--card {
+  aspect-ratio: 4 / 3;
+}
+
+.pg2-section__stage--short {
+  aspect-ratio: 5 / 2;
+}
+
 .pg2-section__caption {
   margin-top: 12px;
   display: flex;

@@ -7,6 +7,11 @@ import './ThinkingStream.css'
 
 const BLINK_MS = 380
 const SCRAMBLE_HOLD_MS = 950
+// Symbol cycles on its own ticker, independent of the word cadence — so the
+// leading mark feels like it's "thinking" continuously while the word holds
+// its phrase. Slow enough that each glyph has a beat to register before the
+// next one appears, fast enough to still read as a shimmer.
+const SYMBOL_TICK_MS = 180
 
 export default function ThinkingStream({
   active = true,
@@ -41,7 +46,23 @@ export default function ThinkingStream({
     setTarget(withDots(w))
   }, [vocab])
 
-  // Loop: hold → icon blinks → scramble.
+  // Fast symbol ticker — picks a new random glyph every SYMBOL_TICK_MS so the
+  // leading mark "shimmers" through the pool. Decoupled from the word cycle.
+  useEffect(() => {
+    if (!active) return undefined
+    const id = setInterval(() => {
+      setSymbolIdx((i) => {
+        // Pick a different glyph than the current one so consecutive frames
+        // are always visually distinct.
+        let n = Math.floor(Math.random() * SYMBOLS.length)
+        if (n === i && SYMBOLS.length > 1) n = (n + 1) % SYMBOLS.length
+        return n
+      })
+    }, Math.max(40, SYMBOL_TICK_MS / Math.max(0.15, speed)))
+    return () => clearInterval(id)
+  }, [active, speed])
+
+  // Word cycle: blink → scramble → hold. Independent from the symbol ticker.
   useEffect(() => {
     if (!active) return undefined
     let cancelled = false
@@ -49,7 +70,6 @@ export default function ThinkingStream({
 
     const step = () => {
       if (cancelled) return
-      setSymbolIdx((i) => (i + 1) % SYMBOLS.length)
       setBlinking(true)
       timer = setTimeout(() => {
         if (cancelled) return

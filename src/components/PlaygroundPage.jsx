@@ -13,6 +13,7 @@ import ImageZoomStory from './playground2/interactions/ImageZoomStory.jsx'
 import NumberFlipCounter from './playground2/interactions/NumberFlipCounter.jsx'
 import AppleCarousel from './playground2/interactions/AppleCarousel.jsx'
 import ThinkingStream from './playground2/interactions/ThinkingStream.jsx'
+import NeonTicker from './playground2/interactions/NeonTicker.jsx'
 import { kmcStickers } from './playground2/data/kmcStickers.js'
 import { carImage, carScenes } from './playground2/data/carScenes.js'
 import { carouselCards } from './playground2/data/carouselCards.jsx'
@@ -58,12 +59,16 @@ export default function PlaygroundPage() {
             {() => <ImageZoomStory image={carImage} scenes={carScenes} autoPlay loop />}
           </PlaygroundSection>
 
-          <PlaygroundSection title="Number Flip Counter" meta="Spring · Roll" aspect="wide">
-            {() => <NumberFlipCounter value={0} maxDigits={4} autoPlay duration={0.6} />}
+          <PlaygroundSection title="Neon Ticker" meta="LED · Marquee" aspect="wide">
+            {({ inView }) => <NeonTicker active={inView} />}
           </PlaygroundSection>
 
           <PlaygroundSection title="Apple Carousel" meta="Drag · Snap" aspect="wide">
             {() => <AppleCarousel items={carouselCards} autoPlay loop showControls showDots />}
+          </PlaygroundSection>
+
+          <PlaygroundSection title="Number Flip Counter" meta="Spring · Roll" aspect="wide">
+            {() => <NumberFlipCounter value={0} maxDigits={4} autoPlay duration={0.6} />}
           </PlaygroundSection>
 
           <PlaygroundSection title="Thinking Stream" meta="Scramble · Loop" aspect="wide">
