@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './ProjectDrawer.css'
 import { getLenis } from '../lib/lenisStore.js'
 
@@ -166,7 +167,12 @@ export default function ProjectDrawer({
     )
   }
 
-  return (
+  // Portal-mount under <body> so the drawer escapes every ancestor stacking
+  // context. backdrop-filter on the scrim is silently broken by any parent
+  // with `transform`, `filter`, `perspective`, or `will-change` on those —
+  // and framer-motion / GSAP do apply inline transforms during transitions,
+  // which is why the blur was rendering in dev but disappearing in prod.
+  return createPortal(
     <div
       className={`pd ${open ? 'pd--open' : ''}`}
       aria-hidden={!open}
@@ -311,6 +317,7 @@ export default function ProjectDrawer({
           </div>
         )}
       </aside>
-    </div>
+    </div>,
+    document.body,
   )
 }
