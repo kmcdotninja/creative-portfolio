@@ -33,7 +33,6 @@ export default function StickerStack({
     Object.fromEntries(stickers.map((_, i) => [i, i + 1])),
   )
   const topZ = useRef(stickers.length)
-  const started = useRef(false)
   const dragTimer = useRef(undefined)
   const loopTimer = useRef(undefined)
   const userTookOver = useRef(false)
@@ -51,21 +50,21 @@ export default function StickerStack({
     }
   }
 
+  // Start (or restart) the loop whenever `play` flips on and the container
+  // has been measured. The previous one-shot `started.current` guard broke
+  // under React 19 StrictMode: the dev double-mount cleared the loop timer
+  // on unmount, then the remount skipped beginEntry because the ref was
+  // already true. Pairing start with a cleanup keeps StrictMode and re-entry
+  // (scroll out / back in) working.
   useEffect(() => {
-    if (play && !started.current && scale > 0) {
-      started.current = true
-      beginEntry()
+    if (!play || scale === 0) return undefined
+    beginEntry()
+    return () => {
+      clearTimeout(dragTimer.current)
+      clearTimeout(loopTimer.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [play, scale])
-
-  useEffect(
-    () => () => {
-      clearTimeout(dragTimer.current)
-      clearTimeout(loopTimer.current)
-    },
-    [],
-  )
 
   const bringToFront = (i) => {
     userTookOver.current = true

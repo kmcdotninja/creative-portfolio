@@ -41,7 +41,7 @@
   font-family: var(--sans);
   font-size: 16px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text);
   letter-spacing: -0.005em;
 }
 
@@ -50,7 +50,7 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-dim);
 }
 
 @media (max-width: 640px) {

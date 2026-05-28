@@ -24,7 +24,9 @@
 }
 
 .pg2-carousel__card {
-  height: 74%;
+  /* Shorter than the default 74% so the dots/play controls below sit
+     comfortably without overlapping the slide on a 16:10 stage. */
+  height: 64%;
   width: 100%;
   overflow: hidden;
   border-radius: 32px;
@@ -63,18 +65,23 @@
   align-items: center;
   height: 36px;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  /* Solid dark background — works on devices without backdrop-filter and
+     still reads against bright slide images. Blur is layered on top as
+     an enhancement where supported. */
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0 16px;
   border-radius: 9999px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
 }
 
 .pg2-carousel__dot {
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.45);
   border: none;
   padding: 0;
   transition: background-color 0.2s ease;
@@ -82,14 +89,14 @@
 }
 
 .pg2-carousel__dot:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .pg2-carousel__dot--active {
   position: relative;
   width: 28px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   overflow: hidden;
 }
 
@@ -109,20 +116,46 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  border: none;
   padding: 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
   transition: background-color 0.2s ease, transform 0.1s ease;
   cursor: var(--cursor-pointer, pointer);
 }
 
 .pg2-carousel__play:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .pg2-carousel__play:active {
   transform: scale(0.95);
+}
+
+/* ---- Mobile: stage is square here (set in PlaygroundPage.css), so the
+   slide has plenty of room. Centered slide + short controls bar — both stay
+   close to each other (~10px gap). ---- */
+@media (max-width: 600px) {
+  .pg2-carousel__card {
+    height: 70%;
+  }
+  .pg2-carousel__controls {
+    bottom: 12px;
+    gap: 8px;
+  }
+  .pg2-carousel__dots {
+    height: 30px;
+    padding: 0 12px;
+    gap: 6px;
+  }
+  .pg2-carousel__dot--active {
+    width: 22px;
+  }
+  .pg2-carousel__play {
+    width: 30px;
+    height: 30px;
+  }
 }

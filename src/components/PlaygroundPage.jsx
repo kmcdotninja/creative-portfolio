@@ -36,13 +36,21 @@ export default function PlaygroundPage() {
             between projects
           </h1>
           <p className="pgp__sub">
-            Small experiments in motion, physics, and interaction design.
+            Small experiments in illustrations, code, and interaction design.
           </p>
         </header>
 
         <div className="pgp__demos">
           <PlaygroundSection title="Sticker Stack" meta="Drag · Spring" aspect="wide">
-            {({ inView }) => <StickerStack stickers={kmcStickers} play={inView} loop />}
+            {({ inView }) => (
+              /* Entry ≈ 1.7 s, so loopDelay 2300 ms gives a 4 s replay cycle. */
+              <StickerStack
+                stickers={kmcStickers}
+                play={inView}
+                loop
+                loopDelay={2300}
+              />
+            )}
           </PlaygroundSection>
 
           <PlaygroundSection title="Image Zoom Story" meta="Camera · Zoom" aspect="wide">

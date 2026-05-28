@@ -118,3 +118,34 @@
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
+
+/* ---- Mobile: shrink the whole composition so the "Auto" indicator at the
+   top stops colliding with the digits, and the controls stay reachable. ---- */
+@media (max-width: 600px) {
+  .pg2-counter {
+    gap: 28px;
+  }
+  .pg2-counter__status {
+    top: 12px;
+  }
+  /* Digit height/width/fontSize are inline-styled on the React component.
+     Scale the whole digit row down — keeps the spring animation maths intact
+     while making the visual fit comfortably under the Auto indicator. */
+  .pg2-counter__digits {
+    transform: scale(0.66);
+    transform-origin: center center;
+  }
+  .pg2-counter__hold {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .pg2-counter__randomize {
+    padding: 8px 14px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+  .pg2-counter__controls {
+    gap: 8px;
+  }
+}
