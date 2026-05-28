@@ -212,6 +212,21 @@
 }
 
 .pg2-zoom__dot--active {
-  width: 20px;
+  position: relative;
+  width: 24px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  cursor: var(--cursor-pointer, pointer);
+}
+
+/* Progress bar inside the active dot — fills left-to-right over the scene's
+   dwell time, then the dot advances. Same idea as Apple Carousel. */
+.pg2-zoom__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 9999px;
   background: #fff;
 }

@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import {
+  animate,
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion'
 import './ImageZoomStory.css'
 
 const CAMERA_TRANSITION = { duration: 0.85, ease: [0.65, 0, 0.35, 1] }
@@ -25,7 +31,7 @@ export default function ImageZoomStory({
   activeIndex = 0,
   onChange,
   autoPlay = false,
-  duration = 3500,
+  duration = 2800,
   loop = false,
   showHotspots = true,
 }) {
@@ -61,8 +67,21 @@ export default function ImageZoomStory({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex])
 
+  // Auto-play storytelling — advances on its own while playing. Drives the
+  // active-dot fill at the same time so the dot reads as a progress bar
+  // counting down to the next scene (Apple-Carousel-style).
+  const progress = useMotionValue(0)
+  const fillWidth = useTransform(progress, (v) => `${Math.min(100, v * 100)}%`)
+  const fillControls = useRef(null)
+
   useEffect(() => {
-    if (!playing || !loaded) return
+    fillControls.current?.stop()
+    if (!playing || !loaded) return undefined
+    progress.set(0)
+    fillControls.current = animate(progress, 1, {
+      duration: duration / 1000,
+      ease: 'linear',
+    })
     const id = setTimeout(() => {
       const next = active + 1
       if (!loop && next >= n) {
@@ -71,8 +90,11 @@ export default function ImageZoomStory({
       }
       goTo(next)
     }, duration)
-    return () => clearTimeout(id)
-  }, [playing, loaded, active, duration, loop, n, goTo])
+    return () => {
+      clearTimeout(id)
+      fillControls.current?.stop()
+    }
+  }, [playing, loaded, active, duration, loop, n, goTo, progress])
 
   const replay = () => {
     setPlaying(true)
@@ -184,15 +206,30 @@ export default function ImageZoomStory({
       <div className="pg2-zoom__controls">
         <StepButton dir="left" disabled={!loop && active === 0} onClick={() => goTo(active - 1)} />
         <div className="pg2-zoom__dots">
-          {scenes.map((s, i) => (
-            <button
-              key={s.id}
-              type="button"
-              aria-label={s.label ?? `Go to scene ${i + 1}`}
-              onClick={() => goTo(i)}
-              className={`pg2-zoom__dot ${i === active ? 'pg2-zoom__dot--active' : ''}`}
-            />
-          ))}
+          {scenes.map((s, i) =>
+            i === active ? (
+              <button
+                key={s.id}
+                type="button"
+                aria-label={s.label ?? `Scene ${i + 1}`}
+                onClick={() => goTo(i)}
+                className="pg2-zoom__dot pg2-zoom__dot--active"
+              >
+                <motion.div
+                  className="pg2-zoom__fill"
+                  style={{ width: fillWidth }}
+                />
+              </button>
+            ) : (
+              <button
+                key={s.id}
+                type="button"
+                aria-label={s.label ?? `Go to scene ${i + 1}`}
+                onClick={() => goTo(i)}
+                className="pg2-zoom__dot"
+              />
+            ),
+          )}
         </div>
         <StepButton dir="right" disabled={!loop && active === n - 1} onClick={() => goTo(active + 1)} />
         <button

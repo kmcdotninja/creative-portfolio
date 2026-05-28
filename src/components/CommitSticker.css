@@ -33,8 +33,16 @@
   color: var(--ink);
   border-radius: var(--radius);
   font-family: var(--sans);
+  /* Box-shadow stack:
+     - First two `inset` rules give the *dome* feel — a bright inner
+       highlight ring at the top and a soft inset shadow around the edges,
+       so the centre reads as bulging toward the camera.
+     - Drop shadows that follow are the floor cast.
+     - The whole effect strengthens on hover (rule below). */
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 0 22px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
     0 2px 6px rgba(0, 0, 0, 0.025),
     0 8px 18px rgba(0, 0, 0, 0.03),
     0 20px 44px rgba(0, 0, 0, 0.035);
@@ -51,22 +59,31 @@
   --rz: 0deg;
   --lift: -4px;
   /* During hover, snap to the cursor — the leave transition above smooths
-     the return. The extra coloured layer on top is a soft green halo so
-     the whole card reads as glowing, not just lifted. */
+     the return. The deeper inset shadows here exaggerate the bulge while
+     the new holographic outer halo (purple / pink / cyan) joins the green
+     glow so the sticker reads like a domed iridescent pin. */
   transition: transform 0.12s ease-out, box-shadow 0.4s ease;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 30px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
     0 6px 14px rgba(0, 0, 0, 0.08),
     0 20px 38px rgba(0, 0, 0, 0.12),
     0 34px 70px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(57, 211, 83, 0.12),
-    0 0 30px rgba(57, 211, 83, 0.22),
-    0 0 70px rgba(57, 211, 83, 0.18);
+    0 0 0 1px rgba(57, 211, 83, 0.14),
+    0 0 26px rgba(57, 211, 83, 0.26),
+    0 0 60px rgba(124, 58, 237, 0.18),
+    0 0 90px rgba(236, 72, 153, 0.12);
 }
 
-/* Holo sheen — radial highlight tracks the cursor and brightens the
-   spot directly under it. Screen-blended so it adds light instead of
-   painting a white blob. */
+/* Holographic eye-bulge sheen — two layers stacked so the sticker reads
+   like a domed glass lens with iridescent dispersion:
+     1) A wide, soft luminous halo at the cursor (brand green, with a hint
+        of white in the middle that blends in instead of reading as a
+        distinct catch-light).
+     2) A holographic chroma sweep on the OPPOSITE diagonal (purple →
+        pink → cyan) that shifts as the cursor moves, so the dispersion
+        always falls "behind" the brighter spot like real iridescence. */
 .commit-sticker__sheen {
   position: absolute;
   inset: 0;
@@ -74,12 +91,24 @@
   pointer-events: none;
   opacity: 0;
   mix-blend-mode: screen;
-  background: radial-gradient(
-    140px circle at var(--gx) var(--gy),
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(155, 233, 168, 0.32) 35%,
-    rgba(57, 211, 83, 0) 75%
-  );
+  background:
+    /* 1) green halo — pure brand-green tints across the whole radial, no
+       white core. The card glows green near the cursor without any
+       perceptible white spot or wash. */
+    radial-gradient(
+      180px circle at var(--gx) var(--gy),
+      rgba(57, 211, 83, 0.32) 0%,
+      rgba(57, 211, 83, 0.22) 40%,
+      rgba(57, 211, 83, 0) 85%
+    ),
+    /* 2) holographic dispersion on the opposite diagonal */
+    radial-gradient(
+      220px circle at calc(100% - var(--gx)) calc(100% - var(--gy)),
+      rgba(124, 58, 237, 0.22) 0%,
+      rgba(236, 72, 153, 0.2) 28%,
+      rgba(34, 211, 238, 0.22) 52%,
+      transparent 72%
+    );
   transition: opacity 0.3s ease;
   z-index: 3;
 }

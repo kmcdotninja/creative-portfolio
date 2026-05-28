@@ -19,7 +19,7 @@ export default function AppleCarousel({
   loop = false,
   showControls = true,
   showDots = true,
-  interval = 4000,
+  interval = 3200,
 }) {
   const n = items.length
   const viewportRef = useRef(null)
