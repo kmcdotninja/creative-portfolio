@@ -36,7 +36,7 @@ export default function PlaygroundPage() {
             between projects
           </h1>
           <p className="pgp__sub">
-            Small experiments of illustrations, code, and interaction design.
+            Small experiments in illustrations, code, and interaction design.
           </p>
         </header>
 
