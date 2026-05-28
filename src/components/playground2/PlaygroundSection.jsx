@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useInView } from 'framer-motion'
 import './PlaygroundSection.css'
 
 export default function PlaygroundSection({
@@ -9,20 +9,21 @@ export default function PlaygroundSection({
   aspect = 'wide',
   children,
 }) {
+  // No scroll-reveal on the stage itself — cards just appear in their final
+  // state. `useInView` is kept because the interactive children still want
+  // the signal (StickerStack pauses, NeonTicker pauses, ThinkingStream
+  // pauses when out of view).
   const stageRef = useRef(null)
   const inView = useInView(stageRef, { amount: 0.3, once: false })
 
   return (
     <figure className={`pg2-section ${span === 'full' ? 'pg2-section--full' : ''}`}>
-      <motion.div
+      <div
         ref={stageRef}
         className={`pg2-section__stage pg2-section__stage--${aspect}`}
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0.2, y: 12 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         {children({ inView })}
-      </motion.div>
+      </div>
 
       <figcaption className="pg2-section__caption">
         <h2 className="pg2-section__title">{title}</h2>

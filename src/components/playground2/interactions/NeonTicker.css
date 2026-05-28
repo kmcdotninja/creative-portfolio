@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@400;700;900&display=swap');
+/* Doto (dot-matrix display font) is loaded via a non-blocking <link> in
+   index.html. Using @import here was blocking the whole stylesheet on
+   mobile networks where fonts.googleapis.com is slow or unreachable —
+   the browser holds the entire CSS bundle until the @import resolves. */
 
 .pg2-neon {
   position: absolute;
@@ -57,6 +60,9 @@
   pointer-events: none;
 }
 
+/* Marquee — pure CSS animation on the compositor thread. `translate3d`
+   forces a GPU layer; `backface-visibility` keeps it pinned there. Duration
+   and play-state are set inline per row from React. */
 .pg2-neon__track {
   position: relative;
   display: flex;
@@ -64,6 +70,23 @@
   width: max-content;
   will-change: transform;
   z-index: 1;
+  animation-name: pg2-neon-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes pg2-neon-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg2-neon__track {
+    animation: none;
+  }
 }
 
 /* Two halves of identical content. `-50%` of the doubled track equals the
@@ -138,5 +161,23 @@
   }
   .pg2-neon__text {
     padding-right: 22px;
+  }
+  /* Lighter glow on phones — fewer text-shadow layers means each frame's
+     paint cost stays low, so the compositor-driven marquee never gets
+     held up waiting on the rasteriser. */
+  .pg2-neon__row--white {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 8px rgba(255, 255, 255, 0.7);
+  }
+  .pg2-neon__row--red {
+    text-shadow:
+      0 0 2px #ff0000,
+      0 0 8px rgba(255, 0, 0, 0.8);
+  }
+  .pg2-neon__row--green {
+    text-shadow:
+      0 0 2px #00ff00,
+      0 0 8px rgba(0, 255, 0, 0.8);
   }
 }
