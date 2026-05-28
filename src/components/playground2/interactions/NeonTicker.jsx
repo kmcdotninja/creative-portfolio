@@ -4,17 +4,17 @@ const TICKERS = [
   {
     color: 'white',
     text: 'MOTION DESIGN STUDIO  ·  EXPERIMENTS IN GESTURE  ·  STUDIO OPEN  ·  ',
-    duration: 22,
+    duration: 37,
   },
   {
     color: 'red',
     text: 'TINDER SWIPE STACK NOW PLAYING  ·  LIQUID DOCK ON  ·  STAY WITH US  ·  ',
-    duration: 17,
+    duration: 28,
   },
   {
     color: 'green',
     text: '+2.4% AAPL  ·  +5.7% NVDA  ·  +3.1% GOOGL  ·  +6.9% META  ·  +1.8% MSFT  ·  ',
-    duration: 26,
+    duration: 43,
   },
 ]
 
