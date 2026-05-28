@@ -34,7 +34,10 @@
 .pg2-counter__digits {
   position: relative;
   display: flex;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* BDO Grotesk is the project's primary sans — fits the rest of the site's
+     numerals. `tabular-nums` keeps each digit slot the same width so the
+     flip animation has no horizontal jitter when glyphs swap. */
+  font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   color: #fff;
 }
