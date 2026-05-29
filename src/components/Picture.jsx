@@ -12,8 +12,20 @@
 
 const RASTER = /\.(webp|png|jpe?g)$/i
 
+// Sources we deliberately render as their original raster (no AVIF). These
+// sit under the compress-images.mjs size floor, so no AVIF sibling is
+// emitted by the build — and once the browser commits to AVIF via
+// <source type="image/avif">, a 404 does NOT fall back to <img src>.
+// Listing them here keeps the <picture> from advertising an AVIF that
+// doesn't exist.
+const NO_AVIF = new Set([
+  '/projects/kutuby/logo.png',
+  '/projects/kutuby/character-bird.png',
+])
+
 function deriveAvif(src) {
   if (!src || !RASTER.test(src)) return null
+  if (NO_AVIF.has(src)) return null
   return src.replace(RASTER, '.avif')
 }
 
