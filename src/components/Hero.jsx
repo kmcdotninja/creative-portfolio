@@ -1,6 +1,13 @@
 import './Hero.css'
 import TopNav from './TopNav.jsx'
+import RevealHeadline from './RevealHeadline.jsx'
 import { useSnd } from '../hooks/useSnd.js'
+
+const HEADLINE_LINES = [
+  'Product designer',
+  'crafting brands, products',
+  'and websites',
+]
 
 export default function Hero() {
   const { play, SOUNDS } = useSnd()
@@ -12,13 +19,7 @@ export default function Hero() {
       <h1 className="sr-only">
         Yahaya Muhammad — Product Designer & UX Designer
       </h1>
-      <p className="intro__big" data-reveal aria-hidden="true">
-        Product designer
-        <br />
-        crafting brands, products
-        <br />
-        and websites
-      </p>
+      <RevealHeadline className="intro__big" lines={HEADLINE_LINES} />
 
       <div className="intro__about" data-reveal>
         <p className="intro__bio">

@@ -1,0 +1,19 @@
+/* Per-line mask for the headline load reveal (see RevealHeadline.jsx). Each
+   line is its own block so the lines stack exactly as the old <br>-separated
+   copy did; overflow:hidden clips the inner span while it slides up from
+   below. The small vertical padding + matching negative margin give the clip
+   a little breathing room so the tall Jaro glyphs aren't shaved at the
+   top/bottom edge of the mask, while keeping the net layout height unchanged. */
+.hl-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.08em 0;
+  margin: -0.08em 0;
+}
+
+.hl-line__inner {
+  display: block;
+  /* Framer Motion drives the transform; will-change hints the compositor so
+     the slide stays on the GPU and doesn't repaint the headline each frame. */
+  will-change: transform;
+}
