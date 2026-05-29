@@ -52,9 +52,13 @@
 }
 
 .introC__sticker--book {
+  /* Pulled inward from the right rail so its left edge clips into the
+     end of "DESIGNER" — matches the casual touch the reference shows.
+     The pin stays at its original offset because the headline already
+     overlaps the "P" naturally on its own. */
   top: clamp(130px, 18vh, 200px);
-  right: clamp(var(--rail), 14vw, 20vw);
-  transform: rotate(6deg);
+  right: clamp(var(--rail), 18vw, 24vw);
+  transform: rotate(8deg);
 }
 
 @media (max-width: 1100px) {
