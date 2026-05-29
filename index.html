@@ -29,23 +29,40 @@
     <link rel="apple-touch-icon" href="/icons/favicon-512.png" />
     <link rel="shortcut icon" href="/icons/favicon-512.png" />
 
-    <!-- Google Fonts — connected early and loaded non-blocking. Combined
-         into a single request so we don't pay two RTTs to fonts.googleapis
-         for what used to be a Doto-only call plus the main Jaro / Instrument
-         Sans / Doto call. preload+onload swap lets the rest of the head
-         continue parsing without waiting on the CSS file. -->
+    <!-- Google Fonts — connected early and loaded non-blocking. Split into
+         two requests on purpose:
+           • Body fonts (Instrument Sans / Doto) use `display=swap` so text
+             paints instantly in the fallback and swaps in seamlessly.
+           • Jaro — the decorative display face used for headings — uses
+             `display=block`. `swap` made the heading flash the fallback
+             (Helvetica) before Jaro arrived; `block` keeps the heading
+             text invisible for the brief load window and then paints
+             straight in Jaro, so no fallback flash is ever shown.
+         Both hit the already-preconnected fonts.googleapis origin, so the
+         second request reuses the warm connection. preload+onload swap lets
+         the rest of the head continue parsing without waiting on the CSS. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Jaro:opsz@6..72&family=Doto:wght@400;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Doto:wght@400;700;900&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=block"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Jaro:opsz@6..72&family=Doto:wght@400;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Doto:wght@400;700;900&display=swap"
+      />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=block"
       />
     </noscript>
 
