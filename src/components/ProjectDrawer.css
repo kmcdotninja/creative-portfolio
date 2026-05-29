@@ -273,6 +273,8 @@
 .pd__gallery {
   display: flex;
   flex-direction: column;
+  /* Separation between major case-study sections (each with its own heading) —
+     deliberately larger than the image-to-image gutter below. */
   gap: clamp(56px, 8vw, 112px);
 }
 
@@ -401,7 +403,10 @@
 .pd__section-rows {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  /* Vertical image-to-image gutter — matched to the homepage work grid
+     (Works2 .project__grid) so stacked drawer images share the same rhythm as
+     the homepage tiles, equal to the horizontal pair gutter (.pd__row). */
+  gap: clamp(8px, 1vw, 14px);
 }
 
 /* ---- Next project CTA ---- */
@@ -473,7 +478,9 @@
 
 .pd__row {
   display: grid;
-  gap: 7px;
+  /* Matches the homepage work grid gutter (Works2 .project__grid column-gap)
+     so paired images in the drawer share the same rhythm. */
+  gap: clamp(8px, 1vw, 14px);
 }
 
 .pd__row--single {
