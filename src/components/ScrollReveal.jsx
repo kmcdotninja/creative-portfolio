@@ -58,6 +58,7 @@ export default function ScrollReveal() {
       return
     }
 
+    let refreshTimer
     const ctx = gsap.context(() => {
       // Word-by-word opacity scrub across the paragraphs block.
       const words = root.querySelectorAll('.sr__word')
@@ -143,10 +144,15 @@ export default function ScrollReveal() {
           if (!isMobile) {
             const wrapRect = polaroidWrap.getBoundingClientRect()
             const paragraphs = root.querySelector('.sr__paragraphs')
-            const textRect = paragraphs?.getBoundingClientRect()
-            const safe = textRect
-              ? wrapRect.left - textRect.right - 24
-              : window.innerWidth * 0.08
+            const rootRect = root.getBoundingClientRect()
+            // The copy is now left-aligned, but the zigzag amplitude must stay
+            // anchored to where the text column's right edge sits when CENTERED
+            // — otherwise left-aligning the paragraphs widens the polaroid's
+            // swing. The column width is unchanged by the alignment, so we
+            // reconstruct the centered right edge from it.
+            const colW = paragraphs ? paragraphs.offsetWidth : rootRect.width
+            const centeredRight = rootRect.left + rootRect.width / 2 + colW / 2
+            const safe = wrapRect.left - centeredRight - 24
             amplitudeVal = Math.min(110, Math.max(40, safe))
           }
         }
@@ -201,9 +207,26 @@ export default function ScrollReveal() {
       }
 
       ScrollTrigger.refresh()
+
+      // The gallery photos sit above the paragraphs, so until they decode (or
+      // the Doto caption font swaps in) the paragraph/signature positions can
+      // shift. If the triggers keep the start/end measured before that, the
+      // word scrub mis-maps and the signature draw never fires (stays opacity
+      // 0 — "can't find the signature"). Re-measure on each photo load, on
+      // window load, and once more after a beat — the same belt-and-suspenders
+      // the global scroll-animation hook uses.
+      root.querySelectorAll('.sr__photo-img').forEach((img) => {
+        if (img.complete) return
+        img.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
+      })
+      window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 600)
     }, rootRef)
 
-    return () => ctx.revert()
+    return () => {
+      clearTimeout(refreshTimer)
+      ctx.revert()
+    }
   }, [reduced])
 
   return (
@@ -226,6 +249,22 @@ export default function ScrollReveal() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="sr__gallery" aria-label="Photos from my life">
+        {ABOUT_IMAGES.map((img) => (
+          <figure className="sr__photo" key={img.src}>
+            <Picture
+              src={img.src}
+              alt={img.alt}
+              className="sr__photo-img"
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
+            />
+            <figcaption className="sr__photo-cap">{img.cap}</figcaption>
+          </figure>
+        ))}
       </div>
 
       <div className="sr__paragraphs">
@@ -263,22 +302,6 @@ export default function ScrollReveal() {
           />
         </svg>
         <span className="sr__name">Yahaya Muhammad</span>
-      </div>
-
-      <div className="sr__gallery" aria-label="Photos from my life">
-        {ABOUT_IMAGES.map((img) => (
-          <figure className="sr__photo" key={img.src}>
-            <Picture
-              src={img.src}
-              alt={img.alt}
-              className="sr__photo-img"
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-            />
-            <figcaption className="sr__photo-cap">{img.cap}</figcaption>
-          </figure>
-        ))}
       </div>
     </section>
   )

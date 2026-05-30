@@ -142,7 +142,10 @@
   flex-direction: column;
   gap: clamp(28px, 3.5vw, 56px);
   max-width: 100ch;
-  margin-inline: auto;
+  /* Left-aligned to the page rail (var(--pad) on .about) so the text starts
+     where the site's headers do — same max-width, just pinned left instead
+     of centered. */
+  margin-inline: 0 auto;
   position: relative;
   z-index: 1;
 }
@@ -171,7 +174,7 @@
 
 /* ---- Signature block ---- */
 .sr__sign {
-  margin: clamp(20px, 3vw, 44px) auto 0;
+  margin: clamp(20px, 3vw, 44px) auto 0 0;
   max-width: 100ch;
   display: flex;
   flex-direction: column;
@@ -204,7 +207,10 @@
    "tossed onto the page" feel. */
 .sr__gallery {
   max-width: 100ch;
-  margin: clamp(48px, 7vw, 96px) auto 0;
+  /* Sits above the about paragraphs, left-aligned to the same page rail so
+     the photo row starts where the text and headers do. Space below it
+     separates the photos from the opening line of text. */
+  margin: 0 auto clamp(48px, 7vw, 96px) 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: clamp(10px, 1.4vw, 18px);
