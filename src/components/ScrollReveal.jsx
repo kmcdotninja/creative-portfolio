@@ -123,74 +123,95 @@ export default function ScrollReveal() {
         })
       }
 
-      // The 7th gallery card (Kaduna) starts in the line, then on scroll it
-      // breaks away — translating down to settle just above the signature
-      // while zig-zagging left into the gutter and wobbling. Its grid slot
-      // stays reserved (transform only), so the other six photos don't move.
+      // The six photos wait as a row (with an empty 7th slot) just above the
+      // signature. The Kaduna card lives in that 7th slot in layout, but starts
+      // translated all the way UP to the top of the section — so on load it sits
+      // alone up top. As you scroll it descends, swaying gently, and settles
+      // into its slot to complete the row (transform only, so nothing reflows).
       //
-      // Desktop only (>=1100px). Below that the row wraps and the Kaduna card
-      // just sits as a static photo in the grid — the scroll transform
-      // flickered too much on touch devices.
+      // Desktop only (>=1100px). Below that the row wraps into the mobile
+      // marquee and the Kaduna card is just another card in the strip.
       const floatCard = floatRef.current
-      const signature = signatureWrapRef.current
       if (floatCard && window.innerWidth >= 1100) {
-        // Layout reads are done once up front (and on refresh/resize) rather
-        // than every scroll frame, so GSAP's transform writes don't force a
-        // reflow mid-animation.
-        let maxYVal = 0
-        let amplitudeVal = 80
+        // Layout reads happen once up front (and on refresh/resize) rather than
+        // every scroll frame, so GSAP's transform writes don't force a reflow.
+        let startYVal = 0
+        let amplitudeVal = 60
 
         const measure = () => {
           if (!floatCard.isConnected) return
-          const cardH = floatCard.offsetHeight
-          // Travel from the card's resting row position down to just above the
-          // signature (offsetTop is measured against .sr, the positioned root).
-          const limit = signature
-            ? signature.offsetTop - floatCard.offsetTop - cardH - 40
-            : root.offsetHeight - floatCard.offsetTop - cardH - 40
-          maxYVal = Math.max(0, limit)
-          // Zig-zag swing scaled to the card width, capped so it dips into the
-          // gutter over the paragraphs without flying off the right edge.
-          amplitudeVal = Math.min(110, Math.max(50, floatCard.offsetWidth * 0.55))
+          // Distance from the card's slot (bottom row) up to the top of the
+          // section — measured untransformed so a leftover transform from the
+          // previous frame can't skew it. startY is negative: how far up the
+          // card sits at scroll progress 0.
+          const prev = floatCard.style.transform
+          floatCard.style.transform = ''
+          const slotTop =
+            floatCard.getBoundingClientRect().top - root.getBoundingClientRect().top
+          floatCard.style.transform = prev
+          startYVal = -Math.max(0, slotTop)
+          // Gentle horizontal sway as it falls; modest so it stays in the
+          // right-hand gutter rather than crossing the text.
+          amplitudeVal = Math.min(70, Math.max(30, floatCard.offsetWidth * 0.4))
         }
-        measure()
-        ScrollTrigger.addEventListener('refresh', measure)
 
         // quickSetter skips per-call tween allocation — cheap per-frame writes.
         const setY = gsap.quickSetter(floatCard, 'y', 'px')
         const setX = gsap.quickSetter(floatCard, 'x', 'px')
         const setRot = gsap.quickSetter(floatCard, 'rotation', 'deg')
 
-        ScrollTrigger.create({
+        // Place the card for a given scroll progress (0 = up top, 1 = settled
+        // in its slot). Pulled out of onUpdate so it can also run on load and
+        // on refresh — with scrub, onUpdate doesn't fire until you scroll into
+        // the trigger's active zone, so without this the card would sit in its
+        // slot on first paint instead of waiting up top.
+        let settleRaf = 0
+        const render = (p) => {
+          if (p > 0.999) {
+            // Settled. Snap into the slot with the transition STILL suppressed
+            // (is-floating on), then restore the hover transition on the next
+            // frame. Order matters: if we re-enabled the transition before
+            // clearing, a single fast scrub frame from high up would animate
+            // the whole drop again — a second Kaduna "falling from the top".
+            floatCard.style.transform = ''
+            cancelAnimationFrame(settleRaf)
+            settleRaf = requestAnimationFrame(() =>
+              floatCard.classList.remove('is-floating'),
+            )
+            return
+          }
+          cancelAnimationFrame(settleRaf)
+          floatCard.classList.add('is-floating')
+          const phase = p * Math.PI * 3
+          const settle = 1 - p // sway + wobble fade out as it lands
+          setY(startYVal * settle) // descend from the top into the slot
+          setX(Math.sin(phase) * amplitudeVal * settle)
+          setRot(1 + Math.sin(phase) * 6 * settle) // wobble → resting +1deg tilt
+        }
+
+        measure()
+        const galleryEl = floatCard.closest('.sr__gallery')
+        const st = ScrollTrigger.create({
           trigger: root,
           start: 'top top',
-          end: 'bottom bottom',
-          // scrub:true pins the animation to scroll position 1:1.
-          scrub: true,
-          onUpdate: (self) => {
-            const p = self.progress
-            // At the very top the card rests in its row. Drop the inline
-            // transform and the floating flag so the CSS tilt + :hover lift
-            // (and its transition) apply exactly like the other six cards.
-            if (p < 0.001) {
-              floatCard.classList.remove('is-floating')
-              floatCard.style.transform = ''
-              return
-            }
-            // Floating: kill the hover transition so the scrub stays 1:1 with
-            // scroll (a transition here would make the card lag the scroll).
-            floatCard.classList.add('is-floating')
-            const phase = p * Math.PI * 3
-            // Left-biased dip: stays in [-amplitude, 0] and starts at 0 so the
-            // card sits flush in its slot at the top, then sways left and back
-            // as it descends (going right would overrun the page rail).
-            const sway = (Math.cos(phase) - 1) / 2
-            setY(p * maxYVal)
-            setX(sway * amplitudeVal)
-            // Wobble around the card's resting +1deg tilt.
-            setRot(1 + Math.sin(phase) * 5)
-          },
+          // End the descent when the gallery rises to the middle of the screen,
+          // rather than at the section bottom. The gallery sits above the
+          // footer, so footer assets loading (which grow the page and fire a
+          // refresh) no longer re-map progress near the end — that re-map was
+          // flinging the settled card back toward the top for a frame (the
+          // "second Kaduna falling from the top" flicker).
+          endTrigger: galleryEl || root,
+          end: 'top center',
+          scrub: true, // pin the descent to scroll position 1:1
+          onUpdate: (self) => render(self.progress),
         })
+        // Re-measure and re-place on every refresh (layout shifts, resize), and
+        // once now so the card starts up top before any scroll happens.
+        ScrollTrigger.addEventListener('refresh', () => {
+          measure()
+          render(st.progress)
+        })
+        render(st.progress)
       }
 
       ScrollTrigger.refresh()
@@ -343,17 +364,6 @@ export default function ScrollReveal() {
 
   return (
     <section ref={rootRef} className="sr">
-      {/* Desktop: a 7-in-a-line row above the paragraphs, the Kaduna card
-          breaking away on scroll. Mobile: the same cards become an
-          infinite-scroll marquee below the signature (CSS reorders + animates;
-          the duplicate set makes the loop seamless). */}
-      <div className="sr__gallery" aria-label="Photos from my life">
-        <div ref={trackRef} className="sr__track">
-          {GALLERY_CARDS.map((img, i) => renderCard(img, i, true))}
-          {GALLERY_CARDS.map((img, i) => renderCard(img, i, false))}
-        </div>
-      </div>
-
       <div className="sr__paragraphs">
         {PARAGRAPHS.map((p, pi) => (
           <p key={pi} className="sr__paragraph">
@@ -368,6 +378,18 @@ export default function ScrollReveal() {
             )}
           </p>
         ))}
+      </div>
+
+      {/* Desktop: the six photos wait as a row (with an empty 7th slot) just
+          above the signature; the Kaduna card starts up at the top and drops
+          down into its slot as you scroll. Mobile: the same cards become an
+          infinite-scroll marquee below the signature (CSS reorders + animates;
+          the duplicate set makes the loop seamless). */}
+      <div className="sr__gallery" aria-label="Photos from my life">
+        <div ref={trackRef} className="sr__track">
+          {GALLERY_CARDS.map((img, i) => renderCard(img, i, true))}
+          {GALLERY_CARDS.map((img, i) => renderCard(img, i, false))}
+        </div>
       </div>
 
       <div ref={signatureWrapRef} className="sr__sign">
