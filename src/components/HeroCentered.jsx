@@ -5,7 +5,7 @@ import { useSnd } from '../hooks/useSnd.js'
 
 const HEADLINE_LINES = [
   'Product designer',
-  'crafting brands, products',
+  'building brands, apps',
   'and websites',
 ]
 
