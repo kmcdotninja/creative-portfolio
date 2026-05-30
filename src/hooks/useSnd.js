@@ -88,7 +88,7 @@ export function useSnd(kit = KITS.DEFAULT) {
       ensureKit(targetKit)
         .then((inst) => {
           try {
-            inst.play(sound, { volume: 0.5, ...options })
+            inst.play(sound, { volume: 1, ...options })
           } catch {
             // ignore — autoplay may be blocked until a user gesture
           }
