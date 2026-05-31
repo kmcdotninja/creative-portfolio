@@ -380,18 +380,6 @@ export default function ScrollReveal() {
         ))}
       </div>
 
-      {/* Desktop: the six photos wait as a row (with an empty 7th slot) just
-          above the signature; the Kaduna card starts up at the top and drops
-          down into its slot as you scroll. Mobile: the same cards become an
-          infinite-scroll marquee below the signature (CSS reorders + animates;
-          the duplicate set makes the loop seamless). */}
-      <div className="sr__gallery" aria-label="Photos from my life">
-        <div ref={trackRef} className="sr__track">
-          {GALLERY_CARDS.map((img, i) => renderCard(img, i, true))}
-          {GALLERY_CARDS.map((img, i) => renderCard(img, i, false))}
-        </div>
-      </div>
-
       <div ref={signatureWrapRef} className="sr__sign">
         <svg
           width="244"
@@ -411,6 +399,19 @@ export default function ScrollReveal() {
           />
         </svg>
         <span className="sr__name">Yahaya Muhammad</span>
+      </div>
+
+      {/* The signature signs off the paragraphs above; the photos follow below
+          it. Desktop: the six photos wait as a row (with an empty 7th slot);
+          the Kaduna card starts up at the top of the section and drops down
+          into its slot as you scroll. Mobile: the same cards become an
+          infinite-scroll marquee (CSS reorders + animates; the duplicate set
+          makes the loop seamless). */}
+      <div className="sr__gallery" aria-label="Photos from my life">
+        <div ref={trackRef} className="sr__track">
+          {GALLERY_CARDS.map((img, i) => renderCard(img, i, true))}
+          {GALLERY_CARDS.map((img, i) => renderCard(img, i, false))}
+        </div>
       </div>
     </section>
   )
